@@ -1,6 +1,4 @@
 ﻿using Market.Application.Abstractions;
-using Market.Application.Abstractions.Caching;
-using Market.Infrastructure.Caching;
 using Market.Infrastructure.Common;
 using Market.Infrastructure.Database;
 using Market.Infrastructure.Email;
@@ -56,14 +54,6 @@ public static class DependencyInjection
         // TimeProvider (if used in handlers/services)
         services.AddSingleton<TimeProvider>(TimeProvider.System);
 
-        // Currency conversion (reads rates from the database)
-        services.AddScoped<ICurrencyConverter, CurrencyConverter>();
-
-        // Uploaded files (product images) in wwwroot/uploads
-        services.AddSingleton<IFileStorage, LocalFileStorage>();
-
-        AddCaching(services, configuration);
-        AddExchangeRateProvider(services, configuration);
         AddEmail(services, configuration, env);
 
         return services;
@@ -127,51 +117,5 @@ public static class DependencyInjection
                 $"Frontend:BaseUrl is not set in the '{env.EnvironmentName}' environment. " +
                 $"Configure the frontend address (e.g. environment variable Frontend__BaseUrl) for links in emails.");
         }
-    }
-
-    /// <summary>
-    /// Distributed cache: Redis when "ConnectionStrings:Redis" is set, otherwise memory.
-    /// ICacheService works the same way on both, so the application starts without a Redis server.
-    /// Nothing in the starter uses the cache yet (see ICacheService for an example).
-    /// </summary>
-    private static void AddCaching(IServiceCollection services, IConfiguration configuration)
-    {
-        var redisConnectionString = configuration.GetConnectionString(nameof(ConnectionStringsOptions.Redis));
-
-        if (!string.IsNullOrWhiteSpace(redisConnectionString))
-        {
-            // Connects lazily (on the first cache call), not at startup.
-            services.AddStackExchangeRedisCache(options =>
-            {
-                options.Configuration = redisConnectionString;
-                options.InstanceName = "Market:";
-            });
-        }
-        else
-        {
-            services.AddDistributedMemoryCache();
-        }
-
-        services.AddSingleton<ICacheService, CacheService>();
-        services.AddSingleton<ICatalogCacheVersionService, CatalogCacheVersionService>();
-    }
-
-    /// <summary>
-    /// Optional download of exchange rates ("ExchangeRates" section). The typed HttpClient is only configured here;
-    /// the network is used only when an administrator calls POST /Currencies/rates/refresh with Provider = "Frankfurter".
-    /// </summary>
-    private static void AddExchangeRateProvider(IServiceCollection services, IConfiguration configuration)
-    {
-        services.AddOptions<ExchangeRatesOptions>()
-            .Bind(configuration.GetSection(ExchangeRatesOptions.SectionName))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-
-        services.AddHttpClient<IExchangeRateProvider, FrankfurterExchangeRateProvider>((sp, client) =>
-        {
-            var options = sp.GetRequiredService<IOptions<ExchangeRatesOptions>>().Value;
-            client.BaseAddress = new Uri(options.FrankfurterBaseUrl.TrimEnd('/') + "/");
-            client.Timeout = TimeSpan.FromSeconds(10);
-        });
     }
 }

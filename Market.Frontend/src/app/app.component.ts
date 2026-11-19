@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent {
   private translate = inject(TranslateService);
 
-  protected readonly title = 'Market';
+  protected readonly title = 'Polica';
 
   constructor() {
     // Inicijalizacija translate servisa

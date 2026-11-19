@@ -63,27 +63,6 @@ export interface LogoutCommand {
 }
 
 /**
- * Command for POST /api/auth/register (anonimno)
- * Corresponds to: RegisterCommand.cs
- * Novi korisnik je kupac (bez uloga). Greške po polju: email ("Email je već registrovan."), password, ...
- */
-export interface RegisterCommand {
-  firstname: string;
-  lastname: string;
-  email: string;
-  /** najmanje 8 znakova, bar jedno slovo i jedna cifra (AppValidators.password) */
-  password: string;
-  address?: string | null;
-  city?: string | null;
-}
-
-/**
- * Response for POST /api/auth/register → 201 + tokeni (korisnik je odmah prijavljen).
- * Isti oblik kao odgovor na login.
- */
-export type RegisterCommandDto = LoginCommandDto;
-
-/**
  * Command for POST /api/auth/forgot-password (anonimno) → uvijek 204,
  * i kad nalog ne postoji (odgovor ne otkriva koji emailovi su registrovani).
  * Corresponds to: ForgotPasswordCommand.cs

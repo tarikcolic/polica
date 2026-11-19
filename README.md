@@ -35,7 +35,7 @@ U Visual Studiju: startup projekat `Market.API`, profil `https` (prvi u listi).
 
 - API: `https://localhost:7100` (i `http://localhost:5100`, koji preusmjerava na https)
 - Swagger: `https://localhost:7100/swagger`
-- Baza `Market2026` se pri pokretanju sama kreira i migrira, a demo podaci se upisuju u okruženjima `Development` i `Testing`.
+- Baza `Polica` se pri pokretanju sama kreira i migrira, a demo podaci se upisuju u okruženjima `Development` i `Testing`.
 - Profil `https-testing` pokreće okruženje `Testing` (vidi „Okruženja”).
 
 ## Pokretanje frontenda
@@ -55,9 +55,9 @@ Ako HTTPS certifikat ne radi, pokrenite backend s profilom `http` i u `src/envir
 
 | Email | Lozinka | Uloga |
 |---|---|---|
-| `admin@market.local` | `Admin123!` | administrator (`/admin`) |
-| `manager@market.local` | `Manager123!` | menadžer |
-| `employee@market.local` | `Employee123!` | uposlenik |
+| `admin@polica.local` | `Admin123!` | administrator (`/admin`) |
+| `manager@polica.local` | `Manager123!` | menadžer |
+| `employee@polica.local` | `Employee123!` | uposlenik |
 | `nina.bijedic@email.com`, `iris.memic@email.com`, `azra.smajic@email.com` | `Customer123!` | kupci, vlasnici demo narudžbi |
 | `string` | `string` | za Swagger |
 | `test` | `test123` | za testove |
@@ -71,7 +71,7 @@ Administrator nakon prijave ide na `/admin`, svi ostali na `/client`. Novi kupac
 | Namjena | svakodnevni razvoj | lokalno, ponaša se kao produkcija | server |
 | Backend profil | `https` / `http` | `https-testing` | – |
 | Frontend | `npm start` | `npm run start:testing` | `npm run build` |
-| Baza | `Market2026` | `Market2026_Testing` | iz konfiguracije servera |
+| Baza | `Polica` | `Polica_Testing` | iz konfiguracije servera |
 | Demo podaci | da | da | ne |
 | Swagger | da | ne | ne |
 | Detalji greške (stack trace) u odgovoru | da | ne | ne |

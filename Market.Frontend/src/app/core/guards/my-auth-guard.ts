@@ -15,7 +15,7 @@ import { CurrentUserService } from '../services/auth/current-user.service';
  *     ...
  *   }
  *
- * Guard može stajati i na jednoj child ruti (vidi /checkout u public-routing-module.ts).
+ * Guard može stajati i na jednoj child ruti (vidi /admin/settings u admin-routing-module.ts).
  *
  * Neprijavljen korisnik ide na /auth/login?returnUrl=<tražena adresa>, a login ga poslije
  * vrati tamo (samo na putanju unutar aplikacije – vidi core/services/auth/return-url.ts).

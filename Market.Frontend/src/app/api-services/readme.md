@@ -39,39 +39,19 @@ api-services/
 ├── auth/
 │   ├── auth-api.model.ts
 │   └── auth-api.service.ts
-├── catalog/
-│   ├── catalog-api.model.ts
-│   └── catalog-api.service.ts
-├── currencies/
-│   ├── currencies-api.model.ts
-│   └── currencies-api.service.ts
-├── orders/
-│   ├── order-status.helper.ts
-│   ├── orders-api.models.ts
-│   └── orders-api.service.ts
-├── product-categories/
-│   ├── product-categories-api.model.ts
-│   └── product-categories-api.service.ts
-├── products/
-│   ├── products-api.models.ts
-│   └── products-api.service.ts
-├── promotions/
-│   ├── promotions-api.model.ts
-│   └── promotions-api.service.ts
 └── readme.md
 ```
+
+Polica (#4): starter servisi za prodavnicu (`catalog`, `currencies`, `orders`, `product-categories`,
+`products`, `promotions`) su obrisani zajedno s njihovim backend kontrolerima. Primjeri ispod i dalje
+koriste kategorije proizvoda (`ProductCategories`) jer opisuju obrazac; kod je dostupan u git historiji
+(commit "Import starter project"). Novi servisi (npr. `pharmacies/`, `suppliers/`) prate isti obrazac.
 
 Svaki folder predstavlja jedan backend kontroler:
 
 | Folder | Kontroler | Šta radi |
 |--------|-----------|----------|
-| `auth/` | `/api/auth` | prijava (`login`), obnova tokena (`refresh`), odjava (`logout`), registracija (`register`), zaboravljena i nova lozinka (`forgot-password`, `reset-password`), profil (`me`) i promjena lozinke (`change-password`) |
-| `catalog/` | `/Catalog` | javni (anonimni) podaci za početnu stranicu: kategorije, proizvodi i promocije |
-| `currencies/` | `/Currencies` | valute i kursevi: lista valuta, konverzija iznosa te (Admin) lista, unos i brisanje kurseva i osvježavanje kurseva iz vanjskog izvora |
-| `orders/` | `/Orders` | narudžbe: lista, detalji, kreiranje, izmjena i promjena statusa (`order-status.helper.ts` je pomoćna klasa za statuse) |
-| `product-categories/` | `/ProductCategories` | kategorije proizvoda: CRUD te `enable` / `disable` |
-| `products/` | `/Products` | proizvodi: CRUD, provjera dostupnosti naziva te upload i brisanje slike |
-| `promotions/` | `/Promotions` | promocije (baneri na početnoj): CRUD |
+| `auth/` | `/api/auth` | prijava (`login`), obnova tokena (`refresh`), odjava (`logout`), zaboravljena i nova lozinka (`forgot-password`, `reset-password`), profil (`me`) i promjena lozinke (`change-password`) |
 
 ---
 

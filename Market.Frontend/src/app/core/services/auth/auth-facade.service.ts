@@ -13,14 +13,12 @@ import {
   LogoutCommand,
   RefreshTokenCommand,
   RefreshTokenCommandDto,
-  RegisterCommand,
-  RegisterCommandDto,
 } from '../../../api-services/auth/auth-api.model';
 
 import { AuthStorageService } from './auth-storage.service';
 import { isSafeReturnUrl } from './return-url';
 import { CurrentUserDto } from './current-user.dto';
-import { JwtPayloadDto } from './jwt-payload.dto';
+import { EMAIL_CLAIM_URI, JwtPayloadDto } from './jwt-payload.dto';
 
 /**
  * Glavni auth servis (façade).
@@ -31,7 +29,7 @@ import { JwtPayloadDto } from './jwt-payload.dto';
  * Koristi se u:
  * - interceptoru (getAccessToken, refresh)
  * - guardovima (isAuthenticated, isAdmin)
- * - komponentama (login, registracija, promjena lozinke, logout, navbar)
+ * - komponentama (login, promjena lozinke, logout, navbar)
  *
  * Ovdje su samo pozivi koji mijenjaju tokene. Ostali auth pozivi (zaboravljena lozinka,
  * profil /api/auth/me) idu iz komponente direktno preko AuthApiService.
@@ -76,19 +74,6 @@ export class AuthFacadeService {
       tap((response: LoginCommandDto) => {
         this.storage.saveLogin(response);           // access + refresh + expiries
         this.decodeAndSetUser(response.accessToken); // popuni _currentUser
-      }),
-      map(() => void 0)
-    );
-  }
-
-  /**
-   * Registracija novog kupca. Backend vraća tokene (kao login), pa je korisnik odmah prijavljen.
-   */
-  register(payload: RegisterCommand): Observable<void> {
-    return this.api.register(payload).pipe(
-      tap((response: RegisterCommandDto) => {
-        this.storage.saveLogin(response);
-        this.decodeAndSetUser(response.accessToken);
       }),
       map(() => void 0)
     );
@@ -216,7 +201,10 @@ export class AuthFacadeService {
 
       const user: CurrentUserDto = {
         userId: Number(payload.sub),
-        email: payload.email,
+        // Polica (#4) bug fix: the starter read only payload.email, which the backend never sends,
+        // so the email in the sidebar and on the home page was always empty. Read the long claim
+        // name the backend uses, and keep the short one as a fallback.
+        email: payload[EMAIL_CLAIM_URI] ?? payload.email ?? '',
         isAdmin: payload.is_admin === 'true',
         isManager: payload.is_manager === 'true',
         isEmployee: payload.is_employee === 'true',

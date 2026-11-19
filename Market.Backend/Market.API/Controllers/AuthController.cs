@@ -3,7 +3,6 @@ using Market.Application.Modules.Auth.Commands.ForgotPassword;
 using Market.Application.Modules.Auth.Commands.Login;
 using Market.Application.Modules.Auth.Commands.Logout;
 using Market.Application.Modules.Auth.Commands.Refresh;
-using Market.Application.Modules.Auth.Commands.Register;
 using Market.Application.Modules.Auth.Commands.ResetPassword;
 using Market.Application.Modules.Auth.Commands.UpdateMe;
 using Market.Application.Modules.Auth.Queries.GetMe;
@@ -52,22 +51,6 @@ public sealed class AuthController(IMediator mediator) : ControllerBase
     public async Task Logout([FromBody] LogoutCommand command, CancellationToken ct)
     {
         await mediator.Send(command, ct);
-    }
-
-    /// <summary>
-    /// Registers a new customer account and logs it in (201 + tokens, same shape as login).
-    /// An email that is already registered returns 400 with a field error on "email".
-    /// </summary>
-    [HttpPost("register")]
-    [AllowAnonymous]
-    [ProducesResponseType(typeof(RegisterCommandDto), StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<RegisterCommandDto>> Register([FromBody] RegisterCommand command, CancellationToken ct)
-    {
-        var tokens = await mediator.Send(command, ct);
-
-        // 201 Created; the Location header points to the profile of the new user (GET api/auth/me)
-        return CreatedAtAction(nameof(GetMe), tokens);
     }
 
     /// <summary>

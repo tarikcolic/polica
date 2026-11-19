@@ -12,8 +12,8 @@ import {
  *   <mat-error><app-fit-field-error [control]="form.controls.name" /></mat-error>
  *
  * Poruka specifična za formu (ključ greške → ključ prevoda):
- *   <app-fit-field-error [control]="form.controls.name"
- *                        [messages]="{ nameTaken: 'PRODUCTS.FORM.NAME_TAKEN' }" />
+ *   <app-fit-field-error [control]="form.controls.taxNumber"
+ *                        [messages]="{ taxNumberTaken: 'SUPPLIERS.FORM.TAX_NUMBER_TAKEN' }" />
  *
  * Poruke i ključevi prevoda su u core/forms/validation-messages.ts.
  */

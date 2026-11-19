@@ -1,6 +1,6 @@
 /**
  * Najveće dužine polja korisnika – isto kao MarketUserEntity.Constraints na backendu.
- * Koriste ih registracija (auth/register) i profil (account/my-profile).
+ * Koristi ih profil (account/my-profile).
  * Pravilo lozinke je u core/forms/validators.ts (AppValidators.password).
  */
 export const USER_CONSTRAINTS = {
