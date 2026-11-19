@@ -63,6 +63,19 @@ $sidebar-width: 280px;
         border-radius: 50%;
       }
 
+      // Polica (#4): application name above the user info, white on the blue header
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 16px;
+        position: relative;
+        z-index: 1;
+        color: #ffffff;
+        font-size: 20px;
+        font-weight: 600;
+      }
+
       // User Info
       .user-info {
         display: flex;

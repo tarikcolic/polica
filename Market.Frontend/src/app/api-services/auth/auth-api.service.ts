@@ -8,8 +8,6 @@ import {
   RefreshTokenCommand,
   RefreshTokenCommandDto,
   LogoutCommand,
-  RegisterCommand,
-  RegisterCommandDto,
   ForgotPasswordCommand,
   ResetPasswordCommand,
   GetMeQueryDto,
@@ -19,7 +17,7 @@ import {
 } from './auth-api.model';
 
 /**
- * Pozivi koji vraćaju tokene (login, refresh, register, change-password) iz komponenti idu
+ * Pozivi koji vraćaju tokene (login, refresh, change-password) iz komponenti idu
  * preko AuthFacadeService – on tokene snimi i osvježi prijavljenog korisnika.
  */
 @Injectable({
@@ -51,13 +49,6 @@ export class AuthApiService {
    */
   logout(payload: LogoutCommand): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/logout`, payload);
-  }
-
-  /**
-   * POST /api/auth/register → 201 + tokeni (novi kupac je odmah prijavljen).
-   */
-  register(payload: RegisterCommand): Observable<RegisterCommandDto> {
-    return this.http.post<RegisterCommandDto>(`${this.baseUrl}/register`, payload);
   }
 
   /**

@@ -38,8 +38,8 @@ public sealed class EmailOptions
     public string? Password { get; init; }
 
     /// <summary>
-    /// Sender, e.g. "Market &lt;no-reply@market.local&gt;".
+    /// Sender, e.g. "Polica &lt;no-reply@polica.local&gt;".
     /// </summary>
     [Required]
-    public string From { get; init; } = "Market <no-reply@market.local>";
+    public string From { get; init; } = "Polica <no-reply@polica.local>";
 }

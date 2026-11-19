@@ -3,7 +3,7 @@ import { SharedModule } from '../shared/shared-module';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 
 /**
- * Stranice naloga koje imaju i admin i kupac: "Moj profil" (/admin/profile i /client/profile).
+ * Stranice naloga koje imaju sve uloge: "Moj profil" (/admin/profile).
  *
  * Zašto mali modul, a ne SharedModule: SharedModule importuje i AppModule, pa sve u njemu ide u
  * početni bundle – zato su tamo samo sitni dijelovi (pipe, polje greške, header). Stranica profila

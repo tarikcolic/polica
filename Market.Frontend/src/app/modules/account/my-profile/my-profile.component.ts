@@ -33,12 +33,12 @@ interface ChangePasswordForm {
 }
 
 /**
- * "Moj profil" – ista stranica za admina (/admin/profile) i kupca (/client/profile).
+ * "Moj profil" – ista stranica za sve uloge (/admin/profile).
  * Deklarisana je u AccountModule (vidi account-module.ts).
  *
  * PRIMJER: dvije nezavisne forme na jednoj stranici.
  * (a) profil – BaseFormComponent: this.form, loadData() = GET /api/auth/me, save() = PUT /api/auth/me
- *     (email se samo prikazuje; adresu i grad koristi narudžba)
+ *     (email se samo prikazuje)
  * (b) lozinka – vlastita forma, stanje (isChangingPassword, passwordError) i submit.
  *     Server vraća NOVE tokene i odjavljuje ostale uređaje; tokene snima AuthFacadeService
  *     (kao kod refresh-a), pa ovaj korisnik ostaje prijavljen.

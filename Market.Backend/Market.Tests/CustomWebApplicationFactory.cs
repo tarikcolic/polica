@@ -12,9 +12,9 @@ namespace Market.Tests;
 public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<Program>
 {
     // Seeded accounts (see DynamicDataSeeder)
-    public const string AdminEmail = "admin@market.local";
+    public const string AdminEmail = "admin@polica.local";
     public const string AdminPassword = "Admin123!";
-    public const string EmployeeEmail = "employee@market.local";
+    public const string EmployeeEmail = "employee@polica.local";
     public const string EmployeePassword = "Employee123!";
 
     /// <summary>

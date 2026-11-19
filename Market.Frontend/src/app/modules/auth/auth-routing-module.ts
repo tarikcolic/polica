@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import {AuthLayoutComponent} from './auth-layout/auth-layout.component';
 import {LoginComponent} from './login/login.component';
 import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
-import {RegisterComponent} from './register/register.component';
 import {LogoutComponent} from './logout/logout.component';
 import {ResetPasswordComponent} from './reset-password/reset-password.component';
 
@@ -13,7 +12,6 @@ const routes: Routes = [
     component: AuthLayoutComponent,
     children: [
       { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent },
       { path: 'forgot-password', component: ForgotPasswordComponent },
       // link iz emaila: /auth/reset-password?email=...&token=...
       { path: 'reset-password', component: ResetPasswordComponent },

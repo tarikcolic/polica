@@ -1,0 +1,21 @@
+// Same look as the Settings page (admin-settings.component.scss), so the two placeholder pages match.
+.home-page {
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.home-card {
+  max-width: 720px;
+  border-radius: 16px;
+}
+
+.avatar-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: #4a90e2;
+}
+
+mat-card-content p {
+  margin: 16px 0 0;
+}

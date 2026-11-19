@@ -1,5 +1,6 @@
-// Zajednički izgled novih admin stranica (promocije, kursna lista, izmjena narudžbe).
-// Isti stil kao postojeće stranice (proizvodi, narudžbe), ali na jednom mjestu:
+// Zajednički izgled stranica u layoutu osoblja (/admin/...), na jednom mjestu.
+// Polica (#4): starter stranice koje su ga koristile (promocije, kursna lista, narudžbe) su obrisane;
+// mixini ostaju za nove stranice (šifarnici, narudžbe dobavljačima, zalihe...):
 //   @use '../../admin-page';      .container { @include admin-page.container; }
 // Mixini (a ne gotove klase) → u CSS komponente ulazi samo ono što komponenta koristi.
 

@@ -1,7 +1,10 @@
-using Market.Application.Modules.Auth.Commands.ChangePassword;
-using Market.Application.Modules.Auth.Commands.Register;
+﻿using Market.Application.Modules.Auth.Commands.ChangePassword;
+using Market.Application.Modules.Auth.Commands.Login;
 using Market.Application.Modules.Auth.Queries.GetMe;
+using Market.Domain.Entities.Identity;
 using Market.Shared.Dtos;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -11,8 +14,8 @@ using System.Web;
 namespace Market.Tests.AuthTests.IntegrationTests;
 
 /// <summary>
-/// Register, forgot/reset password, profile (me) and change password.
-/// Every test registers its own user (random email), so the seeded accounts and their cached tokens
+/// Forgot/reset password, profile (me) and change password.
+/// Every test creates its own user (random email), so the seeded accounts and their cached tokens
 /// in <see cref="CustomWebApplicationFactory{TProgram}"/> are never logged out by a password change.
 /// </summary>
 [Collection(IntegrationTestCollection.Name)]
@@ -38,23 +41,48 @@ public class AccountIntegrationTests
     }
 
     /// <summary>
-    /// Registers a new customer with <see cref="Password"/> and returns its email and tokens.
+    /// Creates a new staff account with <see cref="Password"/> and logs it in; returns its email and tokens.
     /// </summary>
-    private async Task<(string Email, RegisterCommandDto Tokens)> RegisterAsync()
+    /// <remarks>
+    /// Polica (#4): the starter called POST api/auth/register here. Self-registration was removed,
+    /// because in Polica only the administrator creates accounts (#8). The test therefore writes the
+    /// user straight into the test database, the same way the administrator's create command will:
+    /// <list type="number">
+    /// <item>open a DI scope on the test server (DatabaseContext is a scoped service),</item>
+    /// <item>hash the password with the same <see cref="IPasswordHasher{TUser}"/> the login handler uses to verify it,</item>
+    /// <item>save the user, then log in through the real endpoint, so the tokens are genuine.</item>
+    /// </list>
+    /// The account is a pharmacist (IsEmployee), one of the three roles that exist in Polica.
+    /// </remarks>
+    private async Task<(string Email, LoginCommandDto Tokens)> CreateUserAndLoginAsync()
     {
         var email = NewEmail();
-        var response = await CreateClient().PostAsJsonAsync("api/auth/register", new
-        {
-            Firstname = "Lejla",
-            Lastname = "Kovač",
-            Email = email,
-            Password,
-            Address = "Titova 10",
-            City = "Sarajevo"
-        });
-        Assert.Equal(HttpStatusCode.Created, response.StatusCode);
 
-        var tokens = await response.Content.ReadFromJsonAsync<RegisterCommandDto>();
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+            var hasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher<MarketUserEntity>>();
+
+            var user = new MarketUserEntity
+            {
+                Firstname = "Lejla",
+                Lastname = "Kovač",
+                Email = email,
+                Address = "Titova 10",
+                City = "Sarajevo",
+                IsEmployee = true,
+                IsEnabled = true
+            };
+            user.PasswordHash = hasher.HashPassword(user, Password);
+
+            db.Users.Add(user);
+            await db.SaveChangesAsync();
+        }
+
+        var response = await CreateClient().PostAsJsonAsync("api/auth/login", new { Email = email, Password });
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        var tokens = await response.Content.ReadFromJsonAsync<LoginCommandDto>();
         return (email, tokens!);
     }
 
@@ -63,64 +91,6 @@ public class AccountIntegrationTests
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         var error = await response.Content.ReadFromJsonAsync<ErrorDto>();
         return error!.Errors!.ToArray();
-    }
-
-    [Fact]
-    public async Task Post_Register_NewCustomer_Returns201WithTokens_AndIsLoggedIn()
-    {
-        // Act
-        var (email, tokens) = await RegisterAsync();
-        var me = await CreateClient(tokens.AccessToken).GetFromJsonAsync<GetMeQueryDto>("api/auth/me");
-
-        // Assert
-        Assert.False(string.IsNullOrEmpty(tokens.AccessToken));
-        Assert.False(string.IsNullOrEmpty(tokens.RefreshToken));
-        Assert.True(tokens.RefreshTokenExpiresAtUtc > tokens.AccessTokenExpiresAtUtc);
-        Assert.Equal(email, me!.Email);
-        Assert.Equal("Titova 10", me.Address);
-        Assert.Equal("Sarajevo", me.City);
-        Assert.False(me.IsAdmin || me.IsManager || me.IsEmployee); // a new account is a customer
-    }
-
-    [Fact]
-    public async Task Post_Register_EmailAlreadyRegistered_ShouldReturnConflict()
-    {
-        // Arrange: a seeded account, in different case
-        var request = new
-        {
-            Firstname = "Drugi",
-            Lastname = "Admin",
-            Email = CustomWebApplicationFactory<Program>.AdminEmail.ToUpperInvariant(),
-            Password
-        };
-
-        // Act
-        var response = await CreateClient().PostAsJsonAsync("api/auth/register", request);
-
-        // Assert: the registered email needs the database, so RegisterCommandHandler checks it (409, not 400)
-        Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
-        var error = await response.Content.ReadFromJsonAsync<ErrorDto>();
-        Assert.Equal("entity.error", error!.Code);
-        Assert.Equal("Email je već registrovan.", error.Message);
-    }
-
-    [Theory]
-    [InlineData("Kratka1")]     // 7 characters
-    [InlineData("SamoSlova")]   // no digit
-    [InlineData("12345678")]    // no letter
-    public async Task Post_Register_WeakPassword_ShouldReturnFieldErrorOnPassword(string password)
-    {
-        // Act
-        var response = await CreateClient().PostAsJsonAsync("api/auth/register", new
-        {
-            Firstname = "Slaba",
-            Lastname = "Lozinka",
-            Email = NewEmail(),
-            Password = password
-        });
-
-        // Assert
-        Assert.Equal("password", Assert.Single(await ReadFieldErrorsAsync(response)).Field);
     }
 
     [Fact]
@@ -141,7 +111,7 @@ public class AccountIntegrationTests
     public async Task Post_ForgotAndResetPassword_SetsNewPasswordOnce_AndLogsOutEverywhere()
     {
         // Arrange
-        var (email, oldTokens) = await RegisterAsync();
+        var (email, oldTokens) = await CreateUserAndLoginAsync();
         var anonymous = CreateClient();
         const string newPassword = "NovaLozinka1";
 
@@ -177,7 +147,7 @@ public class AccountIntegrationTests
     public async Task Put_Me_ChangesProfile_ButNotEmail()
     {
         // Arrange
-        var (email, tokens) = await RegisterAsync();
+        var (email, tokens) = await CreateUserAndLoginAsync();
         var client = CreateClient(tokens.AccessToken);
 
         // Act: "Email" is not part of the request and is ignored
@@ -214,7 +184,7 @@ public class AccountIntegrationTests
     public async Task Post_ChangePassword_WrongCurrentPassword_ShouldReturnFieldErrorOnCurrentPassword()
     {
         // Arrange
-        var (_, tokens) = await RegisterAsync();
+        var (_, tokens) = await CreateUserAndLoginAsync();
 
         // Act
         var response = await CreateClient(tokens.AccessToken).PostAsJsonAsync("api/auth/change-password", new
@@ -231,7 +201,7 @@ public class AccountIntegrationTests
     public async Task Post_ChangePassword_ReturnsNewTokens_AndRevokesOldSession()
     {
         // Arrange
-        var (email, oldTokens) = await RegisterAsync();
+        var (email, oldTokens) = await CreateUserAndLoginAsync();
         var anonymous = CreateClient();
         const string newPassword = "Promijenjena2";
 

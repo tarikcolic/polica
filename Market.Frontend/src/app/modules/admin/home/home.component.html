@@ -1,0 +1,16 @@
+<!-- Polica (#4): start page for every role; the dashboard (#21) replaces the card content. -->
+<div class="home-page">
+  <mat-card class="home-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar class="avatar-icon">local_pharmacy</mat-icon>
+      <mat-card-title>{{ 'HOME.TITLE' | translate }}</mat-card-title>
+      <mat-card-subtitle>
+        {{ 'HOME.LOGGED_IN_AS' | translate: { email: currentUser.currentUser()?.email } }}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p>{{ 'HOME.DESCRIPTION' | translate }}</p>
+    </mat-card-content>
+  </mat-card>
+</div>

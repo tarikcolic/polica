@@ -10,10 +10,6 @@ import {DialogHelperService} from './services/dialog-helper.service';
 import { FitLoadingBarComponent } from './components/fit-loading-bar/fit-loading-bar.component';
 import { FitTableSkeletonComponent } from './components/fit-table-skeleton/fit-table-skeleton.component';
 import { FitFieldErrorComponent } from './components/fit-field-error/fit-field-error.component';
-import { CurrencySelectorComponent } from './components/currency-selector/currency-selector.component';
-import { StoreHeaderComponent } from './components/store-header/store-header.component';
-import { MoneyPipe } from './pipes/money.pipe';
-import { ApiUrlPipe } from './pipes/api-url.pipe';
 
 
 
@@ -23,15 +19,11 @@ import { ApiUrlPipe } from './pipes/api-url.pipe';
     FitConfirmDialogComponent,
     FitLoadingBarComponent,
     FitTableSkeletonComponent,
-    FitFieldErrorComponent,
-    CurrencySelectorComponent,
-    StoreHeaderComponent,
-    MoneyPipe,
-    ApiUrlPipe
+    FitFieldErrorComponent
   ],
   imports: [
     CommonModule,
-    // routerLink u StoreHeaderComponent (samo direktive, bez ruta)
+    // routerLink directives for shared components (directives only, no routes)
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
@@ -50,10 +42,6 @@ import { ApiUrlPipe } from './pipes/api-url.pipe';
     FitLoadingBarComponent,
     FitTableSkeletonComponent,
     FitFieldErrorComponent,
-    CurrencySelectorComponent,
-    StoreHeaderComponent,
-    MoneyPipe,
-    ApiUrlPipe,
     materialModules
   ]
 })

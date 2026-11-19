@@ -18,12 +18,15 @@ export class CurrentUserService {
     return this.auth.currentUser();
   }
 
-  /** Pravilo: admin > ostali → client */
+  /**
+   * Start page after login, and the page myAuthGuard sends a user to when a role check fails.
+   * Polica (#4): all three roles share the /admin shell, whose home page is open to every role.
+   * (The starter sent non-admin users to /client, the customer area that was removed.)
+   */
   getDefaultRoute(): string {
     const user = this.snapshot;
     if (!user) return '/auth/login';
 
-    if (user.isAdmin) return '/admin';
-    return '/client';
+    return '/admin';
   }
 }
