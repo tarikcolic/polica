@@ -19,8 +19,8 @@ public static class DependencyInjection
         // Pipeline behaviors (npr. ValidationBehavior)
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
-        // TimeProvider — if used by handlers
-        services.AddSingleton(TimeProvider.System);
+        // Polica (#5): TimeProvider is no longer registered here. Handlers still inject it; the single
+        // registration (AppTimeProvider, system clock + Sarajevo time zone) is in Market.Infrastructure.
 
         return services;
     }

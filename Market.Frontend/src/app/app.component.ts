@@ -17,6 +17,14 @@ export class AppComponent {
     this.translate.addLangs(['en', 'bs']);
     this.translate.setFallbackLang('bs');
 
+    // Polica (#5): <html lang="..."> follows the chosen text language (index.html starts with "bs").
+    // Screen readers then pronounce the text in the right language, and the browser does not offer to
+    // translate a Bosnian page "from English". Subscribed before use() below, so the first language
+    // is applied too. AppComponent lives as long as the app, so the subscription needs no cleanup.
+    this.translate.onLangChange.subscribe(event => {
+      document.documentElement.lang = event.lang;
+    });
+
     // Učitaj jezik iz localStorage ili koristi default
     const savedLang = localStorage.getItem('language') || 'bs';
 

@@ -2,7 +2,7 @@
 
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { DialogConfig, DialogType, DialogButton, DialogResult } from '../models/dialog-config.model';
 import {FitConfirmDialogComponent} from '../components/fit-confirm-dialog/fit-confirm-dialog.component';
@@ -149,6 +149,45 @@ export class DialogHelperService {
         { type: DialogButton.DELETE, color: 'warn' }
       ]
     });
+  }
+
+  /**
+   * Polica (#5): confirmation before an irreversible business action, with the action's own name on
+   * the confirm button instead of a generic "Da". Used for the confirmation modals the course requires:
+   * sending a purchase order (#12), approving a write-off (#20), shipping a transfer (#19), recalling a batch.
+   *
+   * Emits true only when the user clicks the confirm button. Cancel, Esc and a click outside the dialog
+   * (afterClosed() then emits undefined) all give false, so the caller needs a single check:
+   *
+   *   this.dialogHelper
+   *     .confirmAction('PO.SEND.TITLE', 'PO.SEND.MESSAGE', 'PO.SEND.CONFIRM', { number: po.number })
+   *     .subscribe(confirmed => { if (confirmed) this.send(po); });
+   *
+   * @param confirmKey translation key of the confirm button, e.g. "Pošalji narudžbu"
+   * @param params     values for {{placeholders}} in the title and message
+   * @param color      'warn' (red button) for actions that remove or lose something, e.g. a write-off
+   */
+  confirmAction(
+    titleKey: string,
+    messageKey: string,
+    confirmKey: string,
+    params?: Record<string, unknown>,
+    color: 'primary' | 'warn' = 'primary'
+  ): Observable<boolean> {
+    return this.open({
+      type: DialogType.WARNING,
+      titleKey,
+      messageKey,
+      titleParams: params,
+      messageParams: params,
+      buttons: [
+        { type: DialogButton.CANCEL },
+        { type: DialogButton.OK, translationKey: confirmKey, color }
+      ]
+    }).pipe(
+      // DialogResult (or undefined when closed without a button) → true / false
+      map(result => result?.button === DialogButton.OK)
+    );
   }
 
   /**

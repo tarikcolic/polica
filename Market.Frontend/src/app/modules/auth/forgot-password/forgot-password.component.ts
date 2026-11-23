@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthApiService } from '../../../api-services/auth/auth-api.service';
 import { BaseComponent } from '../../../core/components/base-classes/base-component';
 import { applyServerErrors } from '../../../core/forms/server-errors';
@@ -25,6 +26,8 @@ interface ForgotPasswordForm {
 })
 export class ForgotPasswordComponent extends BaseComponent {
   private authApi = inject(AuthApiService);
+  // Polica (#5): applyServerErrors() needs it to translate the message when the API sends none
+  private translate = inject(TranslateService);
 
   /** U razvoju (ng serve) backend ne šalje email nego ga ispiše u svoj log – to piše i na stranici. */
   protected readonly isProduction = environment.production;
@@ -56,7 +59,7 @@ export class ForgotPasswordComponent extends BaseComponent {
         this.sent = true;
       },
       // 400 (neispravan email) ili server nedostupan – link sigurno nije poslan
-      error: (err) => this.stopLoading(applyServerErrors(this.form, err))
+      error: (err) => this.stopLoading(applyServerErrors(this.form, err, this.translate))
     });
   }
 }

@@ -1,0 +1,17 @@
+<!-- Polica (#5): role="status" lets a screen reader announce the empty result after a search -->
+<div class="empty-state" role="status">
+  <div class="empty-icon">
+    <mat-icon aria-hidden="true">{{ icon }}</mat-icon>
+  </div>
+
+  <h3 class="empty-title">{{ titleKey | translate }}</h3>
+
+  @if (messageKey) {
+    <p class="empty-message">{{ messageKey | translate }}</p>
+  }
+
+  <!-- optional action button(s) from the caller; the div is hidden by CSS when nothing is projected -->
+  <div class="empty-actions">
+    <ng-content></ng-content>
+  </div>
+</div>

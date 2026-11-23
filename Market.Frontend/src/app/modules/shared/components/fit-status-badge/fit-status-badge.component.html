@@ -1,0 +1,7 @@
+<!-- Polica (#5): tone-<tone> picks the colors from the .scss file; the text is projected by the caller -->
+<span class="badge" [ngClass]="'tone-' + tone">
+  @if (icon) {
+    <mat-icon class="badge-icon" aria-hidden="true">{{ icon }}</mat-icon>
+  }
+  <ng-content></ng-content>
+</span>

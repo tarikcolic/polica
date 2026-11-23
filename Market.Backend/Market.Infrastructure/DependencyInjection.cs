@@ -51,8 +51,20 @@ public static class DependencyInjection
         services.AddHttpContextAccessor();
         services.AddScoped<IAppCurrentUser, AppCurrentUser>();
 
-        // TimeProvider (if used in handlers/services)
-        services.AddSingleton<TimeProvider>(TimeProvider.System);
+        // Polica (#5): regional settings ("Regional" section: culture bs-BA, time zone Europe/Sarajevo).
+        // Read here by the clock below and in Program.cs by UseRequestLocalization.
+        services.AddOptions<RegionalOptions>()
+            .Bind(configuration.GetSection(RegionalOptions.SectionName))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        // The application clock: system UTC time + the Sarajevo time zone for "today" (see AppTimeProvider).
+        // The only TimeProvider registration; the starter registered TimeProvider.System here and again in
+        // Market.Application/DependencyInjection.cs, and the later registration silently won.
+        // A factory (sp => ...) because the time zone comes from options, which exist only once the
+        // container is built. IOptions.Value runs the [Required] validation of RegionalOptions.
+        services.AddSingleton<TimeProvider>(sp =>
+            new AppTimeProvider(sp.GetRequiredService<IOptions<RegionalOptions>>().Value.TimeZoneId));
 
         AddEmail(services, configuration, env);
 

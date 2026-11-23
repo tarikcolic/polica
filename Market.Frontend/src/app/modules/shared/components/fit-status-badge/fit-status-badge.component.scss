@@ -1,0 +1,53 @@
+// Polica (#5): status badge colors. Light background + dark text of the same hue; every text color
+// has a contrast of at least 4.5 : 1 against its background (WCAG AA), so the badge stays readable.
+// The color is never the only signal: the badge always also has a text (and optionally an icon).
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  border-radius: 999px; // fully rounded "pill"
+  border: 1px solid transparent;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  white-space: nowrap; // a status never wraps into two lines in a table cell
+}
+
+.badge-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.tone-neutral {
+  background: #eceff1;
+  color: #455a64;
+  border-color: rgba(69, 90, 100, 0.2);
+}
+
+// info uses the application's primary blue (#4976b5 palette from _admin-page.scss)
+.tone-info {
+  background: #e8f0f9;
+  color: #3a5e91;
+  border-color: rgba(58, 94, 145, 0.2);
+}
+
+.tone-success {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border-color: rgba(46, 125, 50, 0.2);
+}
+
+.tone-warning {
+  background: #fff3e0;
+  color: #8d4e00;
+  border-color: rgba(141, 78, 0, 0.2);
+}
+
+.tone-danger {
+  background: #ffebee;
+  color: #c62828;
+  border-color: rgba(198, 40, 40, 0.2);
+}

@@ -6,6 +6,7 @@ import {SharedModule} from '../shared/shared-module';
 import {AccountModule} from '../account/account-module';
 import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
 import { HomeComponent } from './home/home.component';
+import { UiKitComponent } from './ui-kit/ui-kit.component';
 
 /**
  * Polica (#4): the staff area for all three roles, lazy-loaded at /admin (see app-routing-module.ts).
@@ -18,6 +19,8 @@ import { HomeComponent } from './home/home.component';
     AdminLayoutComponent,
     AdminSettingsComponent,
     HomeComponent,
+    // Polica (#5): /admin/ui-kit, sample page of the shared components (admin only)
+    UiKitComponent,
   ],
   imports: [
     AdminRoutingModule,

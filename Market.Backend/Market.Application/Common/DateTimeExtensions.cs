@@ -13,4 +13,19 @@ public static class DateTimeExtensions
         DateTimeKind.Local => value.ToUniversalTime(),
         _ => DateTime.SpecifyKind(value, DateTimeKind.Utc)
     };
+
+    /// <summary>
+    /// Polica (#5): today's calendar date in the application's time zone (Europe/Sarajevo), for comparing
+    /// with DateOnly columns such as ExpiryDate and ManufactureDate (#13), "expired" in FEFO (#15) and
+    /// days left in expiry alerts (#16).
+    /// <para>
+    /// GetLocalNow() is the current UTC time converted to <see cref="TimeProvider.LocalTimeZone"/>: in the
+    /// running API that is AppTimeProvider's Sarajevo zone, in unit tests the zone set on FakeTimeProvider.
+    /// Example: 14.10.2026. 23:30 UTC is 15.10.2026. 01:30 in Sarajevo, so today is 15.10.2026.
+    /// DateTime.UtcNow.Date would return 14.10.2026. and DateTime.Today depends on the server's settings.
+    /// </para>
+    /// Usage in a handler that injects TimeProvider: <c>var today = timeProvider.GetToday();</c>
+    /// </summary>
+    public static DateOnly GetToday(this TimeProvider timeProvider) =>
+        DateOnly.FromDateTime(timeProvider.GetLocalNow().DateTime);
 }

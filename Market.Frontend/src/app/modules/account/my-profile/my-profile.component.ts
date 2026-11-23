@@ -111,7 +111,7 @@ export class MyProfileComponent
           });
           this.stopLoading();
         },
-        error: (err) => this.stopLoading(getErrorMessage(err))
+        error: (err) => this.stopLoading(getErrorMessage(err, this.translate))
       });
   }
 
@@ -141,7 +141,7 @@ export class MyProfileComponent
         this.form.markAsPristine();
         this.toaster.success(this.translate.instant('ACCOUNT.PROFILE.SAVED'));
       },
-      error: (err) => this.stopLoading(applyServerErrors(this.form, err))
+      error: (err) => this.stopLoading(applyServerErrors(this.form, err, this.translate))
     });
   }
 
@@ -173,7 +173,7 @@ export class MyProfileComponent
         error: (err) => {
           this.isChangingPassword = false;
           // pogrešna trenutna lozinka → 400 na "currentPassword" → poruka ispod tog polja
-          this.passwordError = applyServerErrors(this.passwordForm, err);
+          this.passwordError = applyServerErrors(this.passwordForm, err, this.translate);
         }
       });
   }
