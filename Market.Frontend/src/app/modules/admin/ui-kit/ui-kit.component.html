@@ -1,0 +1,154 @@
+<!-- Polica (#5): UI kit. Each section shows one shared building block the way a feature screen uses it. -->
+<div class="ui-kit-page">
+  <div class="header-card">
+    <div class="title-section">
+      <div class="title-icon"><mat-icon>widgets</mat-icon></div>
+      <div>
+        <h1>{{ 'UI_KIT.TITLE' | translate }}</h1>
+        <p class="subtitle">{{ 'UI_KIT.SUBTITLE' | translate }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1. Regional formats: LOCALE_ID bs-BA, DEFAULT_CURRENCY_CODE BAM, DATE_PIPE_DEFAULT_OPTIONS -->
+  <section class="section-card">
+    <h2>{{ 'UI_KIT.FORMATS.TITLE' | translate }}</h2>
+    <table class="formats-table">
+      <tbody>
+        <tr>
+          <th>{{ 'UI_KIT.FORMATS.TODAY' | translate }}</th>
+          <!-- ngNonBindable: Angular shows the braces as text instead of evaluating them -->
+          <td><code ngNonBindable>{{ today | date }}</code></td>
+          <td class="result">{{ today | date }}</td>
+        </tr>
+        <tr>
+          <th>{{ 'UI_KIT.FORMATS.DATE_ONLY' | translate }}</th>
+          <td><code>"{{ sampleDateOnly }}"</code></td>
+          <td class="result">{{ sampleDateOnly | date }}</td>
+        </tr>
+        <tr>
+          <th>{{ 'UI_KIT.FORMATS.TIMESTAMP' | translate }}</th>
+          <td><code>"{{ sampleUtcTimestamp }}"</code></td>
+          <td class="result">{{ sampleUtcTimestamp | date: dateTimeFormat }}</td>
+        </tr>
+        <tr>
+          <th>{{ 'UI_KIT.FORMATS.NUMBER' | translate }}</th>
+          <td><code>{{ sampleNumber }}</code></td>
+          <td class="result">{{ sampleNumber | number: '1.2-2' }}</td>
+        </tr>
+        <tr>
+          <th>{{ 'UI_KIT.FORMATS.AMOUNT' | translate }}</th>
+          <td><code>{{ sampleAmount }}</code></td>
+          <td class="result">{{ sampleAmount | currency }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 2. Status badges: the feature decides the tone, the badge only draws it -->
+  <section class="section-card">
+    <h2>{{ 'UI_KIT.BADGES.TITLE' | translate }}</h2>
+    <div class="badge-row">
+      @for (badge of badges; track badge.tone) {
+        <div class="badge-sample">
+          <app-fit-status-badge [tone]="badge.tone" [icon]="badge.icon">
+            {{ badge.labelKey | translate }}
+          </app-fit-status-badge>
+          <code>tone="{{ badge.tone }}"</code>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- 3. Empty states: default texts for "nothing yet" and "no filter results" -->
+  <section class="section-card">
+    <h2>{{ 'UI_KIT.EMPTY.TITLE' | translate }}</h2>
+    <div class="two-columns">
+      <div class="sample-box">
+        <app-fit-empty-state>
+          <button mat-flat-button color="primary" (click)="emptyStateAction()">
+            <mat-icon>add</mat-icon>
+            {{ 'COMMON.ADD' | translate }}
+          </button>
+        </app-fit-empty-state>
+      </div>
+      <div class="sample-box">
+        <app-fit-empty-state
+          icon="search_off"
+          titleKey="EMPTY_STATE.NO_RESULTS_TITLE"
+          messageKey="EMPTY_STATE.NO_RESULTS_MESSAGE"
+        >
+          <button mat-stroked-button (click)="emptyStateAction()">
+            <mat-icon>filter_alt_off</mat-icon>
+            {{ 'EMPTY_STATE.CLEAR_FILTERS' | translate }}
+          </button>
+        </app-fit-empty-state>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Field errors: <mat-error> + app-fit-field-error, messages from core/forms/validation-messages.ts -->
+  <section class="section-card">
+    <h2>{{ 'UI_KIT.FORM.TITLE' | translate }}</h2>
+    <form [formGroup]="form" class="sample-form" (ngSubmit)="validateForm()">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'UI_KIT.FORM.NAME' | translate }}</mat-label>
+        <input matInput formControlName="name" />
+        <mat-hint>{{ 'UI_KIT.FORM.NAME_HINT' | translate }}</mat-hint>
+        <mat-error><app-fit-field-error [control]="form.controls.name" /></mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'UI_KIT.FORM.EXPIRY_DATE' | translate }}</mat-label>
+        <input matInput [matDatepicker]="expiryPicker" formControlName="expiryDate" />
+        <mat-datepicker-toggle matIconSuffix [for]="expiryPicker"></mat-datepicker-toggle>
+        <mat-datepicker #expiryPicker></mat-datepicker>
+        <mat-hint>{{ 'UI_KIT.FORM.API_VALUE' | translate: { value: expiryDateForApi ?? '–' } }}</mat-hint>
+        <mat-error><app-fit-field-error [control]="form.controls.expiryDate" /></mat-error>
+      </mat-form-field>
+
+      <div>
+        <button mat-flat-button color="primary" type="submit">
+          <mat-icon>rule</mat-icon>
+          {{ 'UI_KIT.FORM.VALIDATE' | translate }}
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- 5. Confirm dialogs and snackbars (DialogHelperService, ToasterService) -->
+  <section class="section-card">
+    <h2>{{ 'UI_KIT.DIALOGS.TITLE' | translate }}</h2>
+    <div class="button-row">
+      <button mat-flat-button color="primary" (click)="openConfirmAction()">
+        <mat-icon>send</mat-icon>
+        {{ 'UI_KIT.DIALOGS.OPEN_ACTION' | translate }}
+      </button>
+      <button mat-stroked-button (click)="openConfirmDelete()">
+        <mat-icon>delete</mat-icon>
+        {{ 'UI_KIT.DIALOGS.OPEN_DELETE' | translate }}
+      </button>
+    </div>
+
+    <h3>{{ 'UI_KIT.TOASTS.TITLE' | translate }}</h3>
+    <div class="button-row">
+      <button mat-stroked-button (click)="showToast('success')">{{ 'DIALOGS.TYPES.SUCCESS' | translate }}</button>
+      <button mat-stroked-button (click)="showToast('error')">{{ 'DIALOGS.TYPES.ERROR' | translate }}</button>
+      <button mat-stroked-button (click)="showToast('warning')">{{ 'DIALOGS.TYPES.WARNING' | translate }}</button>
+      <button mat-stroked-button (click)="showToast('info')">{{ 'DIALOGS.TYPES.INFO' | translate }}</button>
+    </div>
+  </section>
+
+  <!-- 6. Loading: the global bar (automatic for HTTP requests) and the table skeleton for lists -->
+  <section class="section-card">
+    <h2>{{ 'UI_KIT.LOADING.TITLE' | translate }}</h2>
+    <p class="hint">{{ 'UI_KIT.LOADING.HINT' | translate }}</p>
+    <div class="button-row">
+      <button mat-stroked-button (click)="simulateLoading()">
+        <mat-icon>hourglass_top</mat-icon>
+        {{ 'UI_KIT.LOADING.SIMULATE' | translate }}
+      </button>
+    </div>
+    <app-fit-table-skeleton [rows]="3" [columns]="4"></app-fit-table-skeleton>
+  </section>
+</div>

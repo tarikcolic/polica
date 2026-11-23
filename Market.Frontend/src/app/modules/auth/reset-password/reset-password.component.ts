@@ -101,7 +101,7 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
             return;
           }
           // npr. greška na "newPassword" → ispod polja; ostalo u banner
-          this.stopLoading(applyServerErrors(this.form, err));
+          this.stopLoading(applyServerErrors(this.form, err, this.translate));
         }
       });
   }

@@ -1,0 +1,93 @@
+// Polica (#5): the UI kit uses the shared page mixins from _admin-page.scss, the same ones feature
+// pages will use (#6 on), so it also shows the standard page layout: header card + section cards.
+@use '../admin-page';
+
+.ui-kit-page {
+  @include admin-page.container(1100px);
+}
+
+.header-card {
+  @include admin-page.header-card;
+}
+
+.section-card {
+  @include admin-page.section-card;
+
+  h3 {
+    margin: 24px 0 12px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+}
+
+code {
+  font-family: 'Roboto Mono', Consolas, monospace;
+  font-size: 13px;
+  color: admin-page.$text-secondary;
+}
+
+.formats-table {
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 8px 24px 8px 0;
+    text-align: left;
+    border-bottom: 1px solid admin-page.$border-color;
+  }
+
+  th {
+    font-weight: 500;
+    color: admin-page.$text-primary;
+  }
+
+  .result {
+    font-weight: 600;
+  }
+}
+
+.badge-row,
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+
+.badge-sample {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.two-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.sample-box {
+  border: 1px dashed admin-page.$border-color;
+  border-radius: 12px;
+}
+
+.sample-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 16px;
+
+  mat-form-field {
+    width: 280px;
+  }
+}
+
+.hint {
+  margin: 0 0 16px;
+  color: admin-page.$text-secondary;
+}
+
+.button-row {
+  margin-bottom: 16px;
+}

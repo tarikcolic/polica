@@ -5,6 +5,7 @@ import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
 import {MyProfileComponent} from '../account/my-profile/my-profile.component';
 import {AdminSettingsComponent} from './admin-settings/admin-settings.component';
 import { HomeComponent } from './home/home.component';
+import { UiKitComponent } from './ui-kit/ui-kit.component';
 import { myAuthData, myAuthGuard } from '../../core/guards/my-auth-guard';
 
 /**
@@ -34,6 +35,15 @@ const routes: Routes = [
       {
         path: 'settings',
         component: AdminSettingsComponent,
+        canActivate: [myAuthGuard],
+        data: myAuthData({ requireAdmin: true }),
+      },
+
+      // UI KIT (#5) – chain administrator only, not in the menu: sample of the regional formats and the
+      // shared components (SharedModule) for development and review; open it by typing /admin/ui-kit
+      {
+        path: 'ui-kit',
+        component: UiKitComponent,
         canActivate: [myAuthGuard],
         data: myAuthData({ requireAdmin: true }),
       },

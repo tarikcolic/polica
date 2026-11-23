@@ -1,0 +1,61 @@
+// Polica (#5): empty state. No card background of its own, so it can sit inside the table card of a
+// list page (admin-page table-card mixin) in place of the table. Colors match _admin-page.scss.
+
+$primary-color: #4976b5;
+$primary-lighter: #e8f0f9;
+$text-primary: #2c3e50;
+$text-secondary: #546e7a;
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  margin-bottom: 8px;
+  border-radius: 50%;
+  background: $primary-lighter;
+  color: $primary-color;
+
+  mat-icon {
+    font-size: 36px;
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.empty-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.empty-message {
+  max-width: 420px;
+  margin: 0;
+  line-height: 1.5;
+  color: $text-secondary;
+}
+
+.empty-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+
+  // no projected button → no extra space under the message
+  &:empty {
+    display: none;
+  }
+}

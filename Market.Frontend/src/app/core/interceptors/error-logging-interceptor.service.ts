@@ -82,8 +82,17 @@ export const errorLoggingInterceptor: HttpInterceptorFn = (req, next) => {
 /**
  * Helper: Get user-friendly error message
  * Can be used by components to extract error messages
+ *
+ * Polica (#5): when the server sends no message of its own, the text now comes from the ERRORS.*
+ * translation keys (bs.json / en.json), in the language the user picked. The starter returned
+ * hard-coded English here, so e.g. the Bosnian login page showed "Unable to connect to server..."
+ * when the API was not running – two languages on one screen.
+ *
+ * The caller passes its TranslateService because this is a plain function, not a service:
+ * inject() only works while Angular creates a class, not later inside a subscribe() callback.
+ *   error: (err) => this.stopLoading(getErrorMessage(err, this.translate))
  */
-export function getErrorMessage(error: HttpErrorResponse): string {
+export function getErrorMessage(error: HttpErrorResponse, translate: TranslateService): string {
   // Check if error has a custom message from backend (ErrorDto.message)
   if (typeof error.error?.message === 'string' && error.error.message) {
     return error.error.message;
@@ -107,30 +116,35 @@ export function getErrorMessage(error: HttpErrorResponse): string {
     }
   }
 
-  // Check for title (ProblemDetails format)
-  if (error.error?.title) {
-    return error.error.title;
-  }
+  // Polica (#5): the ProblemDetails "title" is no longer shown. ASP.NET writes it in English
+  // ("Not Found", "Unsupported Media Type"), so the translated text for the status code is used instead.
 
   // Fallback to generic messages based on status code
-  switch (error.status) {
+  return translate.instant(statusMessageKey(error.status));
+}
+
+/**
+ * Polica (#5): HTTP status → translation key of a general message (all keys exist in bs.json and en.json).
+ * Status 0 means the browser got no response at all: the API is not running, or there is no network.
+ */
+function statusMessageKey(status: number): string {
+  switch (status) {
     case 0:
-      return 'Unable to connect to server. Please check your internet connection.';
+      return 'ERRORS.NETWORK';
     case 400:
-      return 'Invalid request. Please check your input.';
+      return 'ERRORS.BAD_REQUEST';
     case 401:
-      return 'Unauthorized. Please log in again.';
+      return 'ERRORS.LOGIN_REQUIRED';
     case 403:
-      return 'You do not have permission to perform this action.';
+      return 'ERRORS.FORBIDDEN';
     case 404:
-      return 'The requested resource was not found.';
+      return 'ERRORS.NOT_FOUND';
     case 409:
-      return 'Conflict. The operation cannot be completed.';
-    case 500:
-      return 'Server error. Please try again later.';
+      return 'ERRORS.CONFLICT';
     case 503:
-      return 'Service temporarily unavailable. Please try again later.';
+      return 'ERRORS.SERVICE_UNAVAILABLE';
     default:
-      return `An error occurred: ${error.statusText || 'Unknown error'}`;
+      // any other 5xx is a server problem; everything else is unexpected
+      return status >= 500 ? 'ERRORS.SERVER_ERROR' : 'ERRORS.UNKNOWN';
   }
 }

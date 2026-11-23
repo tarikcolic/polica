@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { getErrorMessage } from '../interceptors/error-logging-interceptor.service';
 import { ErrorDto } from '../models/error-dto';
 
@@ -15,14 +16,21 @@ import { ErrorDto } from '../models/error-dto';
  * (Angular tada ponovo pokreće validatore).
  *
  * Primjer (komponenta):
- *   error: (err) => this.stopLoading(applyServerErrors(this.form, err))
+ *   error: (err) => this.stopLoading(applyServerErrors(this.form, err, this.translate))
+ *
+ * Polica (#5): `translate` is passed on to getErrorMessage(), which translates the general message
+ * when the server sends none (e.g. the API is not running).
  *
  * Primjer (template, uz mat-error):
  *   @if (form.get('name')?.hasError('server')) {
  *     <mat-error>{{ form.get('name')?.getError('server') }}</mat-error>
  *   }
  */
-export function applyServerErrors(form: FormGroup, error: HttpErrorResponse): string {
+export function applyServerErrors(
+  form: FormGroup,
+  error: HttpErrorResponse,
+  translate: TranslateService
+): string {
   const fieldErrors = (error.error as Partial<ErrorDto> | null)?.errors;
 
   if (Array.isArray(fieldErrors)) {
@@ -47,7 +55,7 @@ export function applyServerErrors(form: FormGroup, error: HttpErrorResponse): st
     });
   }
 
-  return getErrorMessage(error);
+  return getErrorMessage(error, translate);
 }
 
 /**

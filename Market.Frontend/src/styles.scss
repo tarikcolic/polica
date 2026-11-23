@@ -50,60 +50,37 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
-// Add this to your global styles.scss
-
 // ===========================
 // TOASTER / SNACKBAR STYLES
 // ===========================
+// ToasterService (core/services/toaster.service.ts) opens the snackbar with panelClass
+// 'snackbar-success' / 'snackbar-error' / 'snackbar-warning' / 'snackbar-info'.
+//
+// Polica (#5): the starter set background-color on that class, but in Angular Material 21 the class
+// lands on the outer container, and the colored box inside it (.mat-mdc-snackbar-surface) paints its
+// own background from the CSS variable --mat-snack-bar-container-color. So every toast stayed dark grey.
+// mat.snack-bar-overrides() sets those variables on the class instead; the inner box inherits them.
+// Colors are a bit darker than the starter's, so white text has a contrast of at least 4.5 : 1.
+@mixin snackbar-colors($background) {
+  @include mat.snack-bar-overrides((
+    container-color: $background,
+    supporting-text-color: #ffffff,
+    button-color: #ffffff, // the "Zatvori" button
+  ));
+}
 
 .snackbar-success {
-  background-color: #4caf50 !important;
-  color: white !important;
-
-  .mat-mdc-snack-bar-label {
-    color: white !important;
-  }
-
-  .mat-mdc-button {
-    color: white !important;
-  }
+  @include snackbar-colors(#2e7d32);
 }
 
 .snackbar-error {
-  background-color: #f44336 !important;
-  color: white !important;
-
-  .mat-mdc-snack-bar-label {
-    color: white !important;
-  }
-
-  .mat-mdc-button {
-    color: white !important;
-  }
+  @include snackbar-colors(#c62828);
 }
 
 .snackbar-warning {
-  background-color: #ff9800 !important;
-  color: white !important;
-
-  .mat-mdc-snack-bar-label {
-    color: white !important;
-  }
-
-  .mat-mdc-button {
-    color: white !important;
-  }
+  @include snackbar-colors(#b45309);
 }
 
 .snackbar-info {
-  background-color: #2196f3 !important;
-  color: white !important;
-
-  .mat-mdc-snack-bar-label {
-    color: white !important;
-  }
-
-  .mat-mdc-button {
-    color: white !important;
-  }
+  @include snackbar-colors(#3a5e91);
 }

@@ -8,7 +8,11 @@
  *   odabrano 15.10.2026. → "2026-10-15T00:00:00.000Z"
  *
  * i obrnuto, "2026-10-15T00:00:00Z" sa servera → Date za 15.10.2026. u datepickeru.
- * Za prikaz takvih datuma koristi DatePipe sa zonom 'UTC': {{ d | date: 'dd.MM.yyyy' : 'UTC' }}
+ * Za prikaz takvih datuma koristi DatePipe sa zonom 'UTC': {{ d | date: 'dd.MM.yyyy.' : 'UTC' }}
+ *
+ * Polica (#5): these helpers are for a calendar day stored as a backend DateTime (e.g. a "from"
+ * date in a list filter). A backend DateOnly field (ExpiryDate, ManufactureDate from #13) has no time
+ * and no zone at all; use core/forms/date-only.ts for those.
  */
 
 /** Date iz datepickera → ISO string (UTC ponoć istog kalendarskog dana). null ostaje null. */

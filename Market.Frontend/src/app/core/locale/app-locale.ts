@@ -19,11 +19,25 @@ export function registerAppLocale(): void {
   registerLocaleData(localeBs, APP_LOCALE);
 }
 
-/** Format datuma u polju datepickera – isti kao {{ datum | date: 'dd.MM.yyyy' }} u tabelama. */
-const INPUT_DATE_FORMAT = 'dd.MM.yyyy';
+/**
+ * Polica (#5): the date format of the whole application, 15.10.2026. – with the final dot, as dates
+ * are written in Bosnian. app-module.ts makes it the default of the DatePipe, so a template writes
+ * just {{ batch.expiryDate | date }}. The datepicker field below uses the same format.
+ */
+export const APP_DATE_FORMAT = 'dd.MM.yyyy.';
 
 /**
- * Formati za mat-datepicker: polje prikazuje dd.MM.yyyy, ostalo (naziv mjeseca u kalendaru,
+ * Polica (#5): date and time, for timestamps such as ReceivedAt or CreatedAtUtc: 15.10.2026. 14:05
+ * The API sends timestamps in UTC ("...Z"); the DatePipe converts them to the browser's local time
+ * (Europe/Sarajevo for pharmacy staff), so in a template: {{ receivedAt | date: 'dd.MM.yyyy. HH:mm' }}
+ */
+export const APP_DATE_TIME_FORMAT = 'dd.MM.yyyy. HH:mm';
+
+/** Format of the text in the datepicker field – the same as in tables (APP_DATE_FORMAT). */
+const INPUT_DATE_FORMAT = APP_DATE_FORMAT;
+
+/**
+ * Formati za mat-datepicker: polje prikazuje dd.MM.yyyy., ostalo (naziv mjeseca u kalendaru,
  * čitači ekrana) radi Intl po lokalu bs-BA.
  */
 export const BS_DATE_FORMATS: MatDateFormats = {
@@ -62,7 +76,9 @@ export class BsDateAdapter extends NativeDateAdapter {
     if (displayFormat === INPUT_DATE_FORMAT && this.isValid(date)) {
       const day = String(date.getDate()).padStart(2, '0');
       const month = String(date.getMonth() + 1).padStart(2, '0');
-      return `${day}.${month}.${date.getFullYear()}`;
+      // Polica (#5): final dot added ("15.10.2026."), the same text the DatePipe shows in tables.
+      // parse() above accepts what the user types with or without it.
+      return `${day}.${month}.${date.getFullYear()}.`;
     }
     return super.format(date, displayFormat as object);
   }

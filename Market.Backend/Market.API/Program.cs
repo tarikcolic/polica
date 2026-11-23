@@ -2,6 +2,8 @@
 using Market.API.Middleware;
 using Market.Application;
 using Market.Infrastructure;
+using Market.Shared.Options;
+using Microsoft.Extensions.Options;
 using Serilog;
 
 public partial class Program
@@ -88,6 +90,20 @@ public partial class Program
             // Request logging is the outermost middleware, so it also measures the exception handler
             // and logs the final status code (e.g. 404/409/500 set by MarketExceptionHandler).
             app.UseMiddleware<RequestResponseLoggingMiddleware>();
+
+            // Polica (#5): regional settings for every request. The middleware sets CultureInfo.CurrentCulture
+            // and CurrentUICulture to "Regional:Culture" (bs-BA) for the rest of the request, so
+            //   - numbers and dates formatted in backend messages look Bosnian: 1.234,56 and 15.10.2026.
+            //   - FluentValidation rules without WithMessage(...) give its built-in Bosnian messages.
+            // bs-BA is the ONLY supported culture: a browser sending "Accept-Language: en" still gets bs-BA,
+            // so the backend speaks one language. Not affected (always culture-invariant): JSON bodies and
+            // query strings, so the frontend keeps sending ISO dates ("2026-10-15") and a decimal point.
+            // Placed before the exception handler, so error responses are built with the same culture.
+            var regional = app.Services.GetRequiredService<IOptions<RegionalOptions>>().Value;
+            app.UseRequestLocalization(new RequestLocalizationOptions()
+                .SetDefaultCulture(regional.Culture)
+                .AddSupportedCultures(regional.Culture)
+                .AddSupportedUICultures(regional.Culture));
 
             // Global exception handler (IExceptionHandler)
             app.UseExceptionHandler();

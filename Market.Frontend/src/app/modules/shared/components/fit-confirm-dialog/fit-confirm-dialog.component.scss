@@ -10,6 +10,7 @@ $primary-dark: #3a5e91;
 
 $success-color: #66bb6a;
 $error-color: #ef5350;
+$danger-dark: #c62828; // Polica (#5): background of the red (warn) button, dark enough for white text
 $warning-color: #ffa726;
 $info-color: #42a5f5;
 
@@ -120,6 +121,11 @@ $border-color: rgba(73, 118, 181, 0.15);
         }
 
         &.mat-warn {
+          // Polica (#5): Material 3 ignores color="warn" (it only keeps adding the class "mat-warn"),
+          // so the Delete button – and confirmAction(..., 'warn') – looked like any other button.
+          // Colored here: red background, white text (contrast 5.6 : 1).
+          background-color: $danger-dark;
+          color: #ffffff;
           box-shadow: 0 4px 12px rgba($error-color, 0.25);
 
           &:hover {

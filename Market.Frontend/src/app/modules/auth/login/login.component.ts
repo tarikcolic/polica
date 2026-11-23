@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from '../../../core/components/base-classes/base-component';
 import { AuthFacadeService } from '../../../core/services/auth/auth-facade.service';
@@ -22,6 +23,8 @@ export class LoginComponent extends BaseComponent {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private currentUser = inject(CurrentUserService);
+  // Polica (#5): getErrorMessage() needs it to translate the message when the API sends none
+  private translate = inject(TranslateService);
   hidePassword = true;
 
   // Seedani admin (Market.API DynamicDataSeeder) popunjen je samo u development buildu,
@@ -57,7 +60,7 @@ export class LoginComponent extends BaseComponent {
       error: (err: HttpErrorResponse) => {
         // 401 → poruka sa backenda ("Pogrešan email ili lozinka."),
         // ostalo (npr. server nije dostupan) → opšta poruka po statusu
-        this.stopLoading(getErrorMessage(err));
+        this.stopLoading(getErrorMessage(err, this.translate));
         if (err.status !== 401) {
           console.error('Login error:', err);
         }

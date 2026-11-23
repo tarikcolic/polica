@@ -6,6 +6,7 @@ import {
   provideZoneChangeDetection
 } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
 import {HttpClient, provideHttpClient, withInterceptors} from '@angular/common/http';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
@@ -18,7 +19,13 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {CustomTranslateLoader} from './core/services/custom-translate-loader';
 import {materialModules} from './modules/shared/material-modules';
 import {SharedModule} from './modules/shared/shared-module';
-import { APP_LOCALE, BS_DATE_FORMATS, BsDateAdapter, registerAppLocale } from './core/locale/app-locale';
+import {
+  APP_DATE_FORMAT,
+  APP_LOCALE,
+  BS_DATE_FORMATS,
+  BsDateAdapter,
+  registerAppLocale
+} from './core/locale/app-locale';
 
 // Podaci za bs-BA (decimalni zarez, nazivi mjeseci, "KM") – prije prvog formatiranja
 registerAppLocale();
@@ -59,6 +66,10 @@ registerAppLocale();
     { provide: LOCALE_ID, useValue: APP_LOCALE },
     // {{ iznos | currency }} bez oznake valute → KM
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'BAM' },
+    // Polica (#5): {{ d | date }} without a format → 15.10.2026. (APP_DATE_FORMAT). Without this the
+    // DatePipe would use 'mediumDate' ("15. okt 2026."). A template can still pass its own format,
+    // e.g. 'dd.MM.yyyy. HH:mm' for timestamps.
+    { provide: DATE_PIPE_DEFAULT_OPTIONS, useValue: { dateFormat: APP_DATE_FORMAT } },
     // mat-datepicker: bosanski nazivi mjeseci, ponedjeljak prvi dan, polje "19.10.2026".
     // Adapter je zadan SAMO ovdje (root). Zato MatNativeDateModule nije u material-modules.ts:
     // lazy modul koji ga importuje bi dobio svoj NativeDateAdapter umjesto ovog.

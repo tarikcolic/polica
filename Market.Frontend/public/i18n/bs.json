@@ -100,6 +100,62 @@
     "TITLE": "Postavke",
     "EMPTY": "Ovdje dolaze postavke aplikacije: pragovi upozorenja o roku trajanja, minimalni preostali rok pri prijemu robe i period za prijedlog transfera. Lični podaci i lozinka su na stranici „Moj profil”."
   },
+  "UI_KIT": {
+    "TITLE": "UI komponente",
+    "SUBTITLE": "Regionalni formati i zajedničke komponente koje koriste svi ekrani. Stranica je samo za administratora.",
+    "FORMATS": {
+      "TITLE": "Regionalni formati (bs-BA)",
+      "TODAY": "Današnji datum",
+      "DATE_ONLY": "Datum sa servera (DateOnly)",
+      "TIMESTAMP": "Vrijeme sa servera (UTC → lokalno)",
+      "NUMBER": "Broj",
+      "AMOUNT": "Iznos u KM"
+    },
+    "BADGES": {
+      "TITLE": "Statusi",
+      "NEUTRAL": "Nacrt",
+      "INFO": "Poslana",
+      "SUCCESS": "Zaprimljena",
+      "WARNING": "Djelimično zaprimljena",
+      "DANGER": "Otkazana"
+    },
+    "EMPTY": {
+      "TITLE": "Prazna lista",
+      "ACTION_CLICKED": "Ovdje bi se otvorila forma ili očistili filteri."
+    },
+    "FORM": {
+      "TITLE": "Greška uz polje",
+      "NAME": "Naziv",
+      "NAME_HINT": "Obavezno, najviše 20 znakova",
+      "EXPIRY_DATE": "Rok trajanja",
+      "API_VALUE": "Šalje se API-ju: {{value}}",
+      "VALIDATE": "Provjeri formu",
+      "VALID": "Forma je ispravna."
+    },
+    "DIALOGS": {
+      "TITLE": "Modali potvrde",
+      "OPEN_ACTION": "Pošalji narudžbu",
+      "OPEN_DELETE": "Obriši stavku",
+      "ACTION_TITLE": "Slanje narudžbe",
+      "ACTION_MESSAGE": "Narudžba {{number}} će biti poslana dobavljaču i više se neće moći mijenjati.",
+      "ACTION_CONFIRM": "Pošalji",
+      "DELETE_ITEM": "Primjer stavke",
+      "CONFIRMED": "Akcija je potvrđena.",
+      "CANCELLED": "Akcija je otkazana."
+    },
+    "TOASTS": {
+      "TITLE": "Obavještenja (snackbar)",
+      "SUCCESS": "Podaci su sačuvani.",
+      "ERROR": "Podaci nisu sačuvani.",
+      "WARNING": "Serija ističe za 20 dana.",
+      "INFO": "Lista je osvježena."
+    },
+    "LOADING": {
+      "TITLE": "Učitavanje",
+      "HINT": "Traka na vrhu ekrana se sama prikazuje dok traje bilo koji HTTP zahtjev. Liste prikazuju kostur tabele dok se učitavaju.",
+      "SIMULATE": "Prikaži traku učitavanja"
+    }
+  },
   "COMMON": {
     "YES": "Da",
     "NO": "Ne",
@@ -117,7 +173,7 @@
     "CLOSE": "Zatvori",
     "CONFIRM": "Potvrdi",
     "REFRESH": "Osvježi",
-    "RETRY": "Pokušaj Ponovo",
+    "RETRY": "Pokušaj ponovo",
     "CLEAR": "Očisti",
     "RESET": "Resetuj",
     "APPLY": "Primijeni",
@@ -138,8 +194,8 @@
     "ADD": "Dodaj",
     "REMOVE": "Ukloni",
     "SELECT": "Odaberi",
-    "SELECT_ALL": "Odaberi Sve",
-    "DESELECT_ALL": "Poništi Sve",
+    "SELECT_ALL": "Odaberi sve",
+    "DESELECT_ALL": "Poništi sve",
     "ACTIONS": "Akcije",
     "STATUS": "Status",
     "ACTIVE": "Aktivan",
@@ -191,9 +247,9 @@
       "BACK": "Nazad"
     },
     "TITLES": {
-      "CONFIRM_DELETE": "Potvrdi Brisanje",
-      "CONFIRM_ACTION": "Potvrdi Akciju",
-      "UNSAVED_CHANGES": "Nesačuvane Izmjene",
+      "CONFIRM_DELETE": "Potvrdi brisanje",
+      "CONFIRM_ACTION": "Potvrdi akciju",
+      "UNSAVED_CHANGES": "Nesačuvane izmjene",
       "SUCCESS": "Uspjeh",
       "ERROR": "Greška",
       "WARNING": "Upozorenje",
@@ -227,6 +283,13 @@
     "PREVIOUS": "Prethodna",
     "NEXT": "Sljedeća"
   },
+  "EMPTY_STATE": {
+    "NO_DATA_TITLE": "Još nema podataka",
+    "NO_DATA_MESSAGE": "Kad se dodaju prve stavke, pojaviće se ovdje.",
+    "NO_RESULTS_TITLE": "Nema rezultata",
+    "NO_RESULTS_MESSAGE": "Nijedna stavka ne odgovara zadanim filterima. Promijenite ili očistite filtere.",
+    "CLEAR_FILTERS": "Očisti filtere"
+  },
   "VALIDATION": {
     "REQUIRED": "Ovo polje je obavezno",
     "REQUIRED_FIELD": "{{field}} je obavezno",
@@ -255,13 +318,14 @@
   },
   "ERRORS": {
     "GENERIC": "Došlo je do greške. Pokušajte ponovo.",
-    "NETWORK": "Greška u mreži. Provjerite konekciju.",
+    "NETWORK": "Nije moguće povezati se sa serverom. Provjerite konekciju i pokušajte ponovo.",
     "TIMEOUT": "Isteklo vrijeme zahtjeva. Pokušajte ponovo.",
     "UNAUTHORIZED": "Niste autorizovani za ovu akciju.",
     "LOGIN_REQUIRED": "Sesija je istekla ili niste prijavljeni. Prijavite se ponovo.",
     "FORBIDDEN": "Nemate dozvolu za ovu akciju.",
     "NOT_FOUND": "Resurs nije pronađen.",
     "SERVER_ERROR": "Greška na serveru. Pokušajte kasnije.",
+    "SERVICE_UNAVAILABLE": "Servis trenutno nije dostupan. Pokušajte kasnije.",
     "BAD_REQUEST": "Neispravan zahtjev.",
     "CONFLICT": "Ova akcija je u konfliktu sa postojećim podacima.",
     "VALIDATION": "Provjerite formu za greške.",

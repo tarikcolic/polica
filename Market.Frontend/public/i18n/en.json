@@ -100,6 +100,62 @@
     "TITLE": "Settings",
     "EMPTY": "Application settings go here: expiry alert thresholds, minimum remaining shelf life on goods receipt and the transfer suggestion period. Personal data and password are on the “My profile” page."
   },
+  "UI_KIT": {
+    "TITLE": "UI kit",
+    "SUBTITLE": "Regional formats and the shared components used by every screen. Administrator only.",
+    "FORMATS": {
+      "TITLE": "Regional formats (bs-BA)",
+      "TODAY": "Today's date",
+      "DATE_ONLY": "Date from the server (DateOnly)",
+      "TIMESTAMP": "Timestamp from the server (UTC → local)",
+      "NUMBER": "Number",
+      "AMOUNT": "Amount in KM"
+    },
+    "BADGES": {
+      "TITLE": "Status badges",
+      "NEUTRAL": "Draft",
+      "INFO": "Sent",
+      "SUCCESS": "Received",
+      "WARNING": "Partially received",
+      "DANGER": "Cancelled"
+    },
+    "EMPTY": {
+      "TITLE": "Empty list",
+      "ACTION_CLICKED": "This is where a form would open or the filters would be cleared."
+    },
+    "FORM": {
+      "TITLE": "Field errors",
+      "NAME": "Name",
+      "NAME_HINT": "Required, at most 20 characters",
+      "EXPIRY_DATE": "Expiry date",
+      "API_VALUE": "Sent to the API: {{value}}",
+      "VALIDATE": "Validate form",
+      "VALID": "The form is valid."
+    },
+    "DIALOGS": {
+      "TITLE": "Confirmation dialogs",
+      "OPEN_ACTION": "Send order",
+      "OPEN_DELETE": "Delete item",
+      "ACTION_TITLE": "Send order",
+      "ACTION_MESSAGE": "Order {{number}} will be sent to the supplier and can no longer be edited.",
+      "ACTION_CONFIRM": "Send",
+      "DELETE_ITEM": "Sample item",
+      "CONFIRMED": "The action was confirmed.",
+      "CANCELLED": "The action was cancelled."
+    },
+    "TOASTS": {
+      "TITLE": "Notifications (snackbar)",
+      "SUCCESS": "The data has been saved.",
+      "ERROR": "The data was not saved.",
+      "WARNING": "The batch expires in 20 days.",
+      "INFO": "The list has been refreshed."
+    },
+    "LOADING": {
+      "TITLE": "Loading",
+      "HINT": "The bar at the top of the screen appears by itself while any HTTP request runs. Lists show a table skeleton while they load.",
+      "SIMULATE": "Show loading bar"
+    }
+  },
   "COMMON": {
     "YES": "Yes",
     "NO": "No",
@@ -227,6 +283,13 @@
     "PREVIOUS": "Previous",
     "NEXT": "Next"
   },
+  "EMPTY_STATE": {
+    "NO_DATA_TITLE": "No data yet",
+    "NO_DATA_MESSAGE": "Items will appear here once they are added.",
+    "NO_RESULTS_TITLE": "No results",
+    "NO_RESULTS_MESSAGE": "No items match the current filters. Change or clear the filters.",
+    "CLEAR_FILTERS": "Clear filters"
+  },
   "VALIDATION": {
     "REQUIRED": "This field is required",
     "REQUIRED_FIELD": "{{field}} is required",
@@ -255,13 +318,14 @@
   },
   "ERRORS": {
     "GENERIC": "An error occurred. Please try again.",
-    "NETWORK": "Network error. Please check your connection.",
+    "NETWORK": "Cannot connect to the server. Check your connection and try again.",
     "TIMEOUT": "Request timeout. Please try again.",
     "UNAUTHORIZED": "You are not authorized to perform this action.",
     "LOGIN_REQUIRED": "Your session has expired or you are not logged in. Please log in again.",
     "FORBIDDEN": "You do not have permission for this action.",
     "NOT_FOUND": "Resource not found.",
     "SERVER_ERROR": "Server error. Please try again later.",
+    "SERVICE_UNAVAILABLE": "The service is temporarily unavailable. Please try again later.",
     "BAD_REQUEST": "Invalid request.",
     "CONFLICT": "This action conflicts with existing data.",
     "VALIDATION": "Please check the form for errors.",
