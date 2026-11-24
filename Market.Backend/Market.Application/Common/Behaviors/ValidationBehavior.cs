@@ -17,6 +17,11 @@ namespace Market.Application.Common.Behaviors;
 /// <c>MarketConflictException</c> or <c>MarketBusinessRuleException</c> (409).</item>
 /// <item>A unique index in the database stays as the last guard: two simultaneous requests can both pass the
 /// check in the handler, and the second insert then fails with <c>DbUpdateException</c> (409).</item>
+/// <item>Polica (#6): when the database rule is about ONE form field the user can correct (a duplicate name
+/// in a code list, a wrong current password), the handler throws <see cref="ValidationException"/> with that
+/// field's name instead (400 with a field error), so the form shows the message under the field.
+/// The check still runs in the handler, never in the validator. Examples: CreateManufacturerCommandHandler,
+/// ChangePasswordCommandHandler.</item>
 /// </list>
 /// Why: the status code keeps its meaning (400 = bad request, 404/409 = conflict with the current data),
 /// a record is read once (in the handler, where it is also used), and validators stay easy to test.

@@ -16,6 +16,7 @@ namespace Market.Infrastructure.Database.Seeders;
 /// The staff accounts use the @polica.local domain (the starter used @market.local); ".local" is a reserved
 /// domain that never receives real email. Tests log in with the same addresses (CustomWebApplicationFactory).
 /// Pharmacies, medications and batches with dates relative to today come in #22 (demo data seeder).
+/// Polica (#6): demo manufacturers (code list) are seeded here too.
 /// Called by <see cref="DatabaseInitializer"/> after migrations, in Development, Testing and IntegrationTests.
 /// </remarks>
 public static class DynamicDataSeeder
@@ -26,6 +27,33 @@ public static class DynamicDataSeeder
         // (SQL Server) ili EnsureCreated (InMemory baza u testovima).
 
         await SeedUsersAsync(context);
+
+        // Polica (#6): demo manufacturers. Dosage forms and write-off reasons are reference data and come
+        // with the migration (StaticDataSeeder); manufacturers are business data, so only demo rows are here.
+        await SeedManufacturersAsync(context);
+    }
+
+    /// <summary>
+    /// Polica (#6): a few real manufacturers from the region, so the code list screen and, later, the medication
+    /// form (#10) have something to show in Development and Testing. Runs only while the table is empty,
+    /// so restarting the API does not add them twice and the administrator's own changes are kept.
+    /// </summary>
+    private static async Task SeedManufacturersAsync(DatabaseContext context)
+    {
+        if (await context.Manufacturers.AnyAsync())
+            return;
+
+        context.Manufacturers.AddRange(
+            new ManufacturerEntity { Name = "Bosnalijek", Country = "Bosna i Hercegovina" },
+            new ManufacturerEntity { Name = "Hemofarm", Country = "Srbija" },
+            new ManufacturerEntity { Name = "Galenika", Country = "Srbija" },
+            new ManufacturerEntity { Name = "Pliva", Country = "Hrvatska" },
+            new ManufacturerEntity { Name = "Belupo", Country = "Hrvatska" },
+            new ManufacturerEntity { Name = "Krka", Country = "Slovenija" });
+
+        // CreatedAtUtc is filled in by DatabaseContext.ApplyAuditAndSoftDelete.
+        await context.SaveChangesAsync();
+        Console.WriteLine("✅ Dynamic seed: demo manufacturers added.");
     }
 
     private static async Task SeedUsersAsync(DatabaseContext context)
