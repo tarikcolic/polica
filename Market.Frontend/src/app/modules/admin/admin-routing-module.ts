@@ -48,6 +48,17 @@ const routes: Routes = [
         data: myAuthData({ requireAdmin: true }),
       },
 
+      // CODE LISTS (#6) – chain administrator only: manufacturers, dosage forms, write-off reasons.
+      // Lazy-loaded module with its own child routes (code-lists/code-lists-routing-module.ts); the guard
+      // here covers all of them. Other roles still read the lists through the API (dropdowns in #10, #20).
+      {
+        path: 'code-lists',
+        canActivate: [myAuthGuard],
+        data: myAuthData({ requireAdmin: true }),
+        loadChildren: () =>
+          import('./code-lists/code-lists-module').then(m => m.CodeListsModule),
+      },
+
       // MY PROFILE – every role (page declared in AccountModule)
       {
         path: 'profile',

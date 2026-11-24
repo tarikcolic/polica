@@ -1,0 +1,131 @@
+<!-- Polica (#6): write-off reasons code list. Same states as the manufacturers page:
+     load error → first load (skeleton) → no rows (empty state) → table. -->
+<div class="code-list-page">
+  <div class="header-card">
+    <div class="title-section">
+      <div class="title-icon"><mat-icon>playlist_remove</mat-icon></div>
+      <div>
+        <h1>{{ 'CODE_LISTS.WRITE_OFF_REASONS.TITLE' | translate }}</h1>
+        <p class="subtitle">{{ 'CODE_LISTS.WRITE_OFF_REASONS.SUBTITLE' | translate }}</p>
+      </div>
+    </div>
+
+    <div class="actions">
+      <mat-form-field appearance="outline" class="search-field" subscriptSizing="dynamic">
+        <mat-label>{{ 'CODE_LISTS.SEARCH' | translate }}</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input
+          matInput
+          [ngModel]="searchText"
+          (ngModelChange)="onSearchInput($event)"
+          autocomplete="off"
+        />
+        @if (searchText) {
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="clearSearch()"
+            [attr.aria-label]="'CODE_LISTS.CLEAR_SEARCH' | translate"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" (click)="onCreate()">
+        <mat-icon>add</mat-icon>
+        {{ 'CODE_LISTS.WRITE_OFF_REASONS.ADD' | translate }}
+      </button>
+    </div>
+  </div>
+
+  @if (errorMessage) {
+    <div class="error-banner" role="alert">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ errorMessage }}</span>
+      <button mat-stroked-button (click)="retry()">{{ 'COMMON.RETRY' | translate }}</button>
+    </div>
+  } @else if (!hasLoaded) {
+    <app-fit-table-skeleton [rows]="5" [columns]="2"></app-fit-table-skeleton>
+  } @else if (items.length === 0) {
+    <div class="table-card">
+      @if (request.search) {
+        <app-fit-empty-state
+          icon="search_off"
+          titleKey="EMPTY_STATE.NO_RESULTS_TITLE"
+          messageKey="CODE_LISTS.NO_RESULTS_MESSAGE"
+        >
+          <button mat-stroked-button (click)="clearSearch()">
+            <mat-icon>filter_alt_off</mat-icon>
+            {{ 'CODE_LISTS.CLEAR_SEARCH' | translate }}
+          </button>
+        </app-fit-empty-state>
+      } @else {
+        <app-fit-empty-state
+          icon="playlist_remove"
+          titleKey="CODE_LISTS.WRITE_OFF_REASONS.EMPTY_TITLE"
+          messageKey="CODE_LISTS.WRITE_OFF_REASONS.EMPTY_MESSAGE"
+        >
+          <button mat-flat-button color="primary" (click)="onCreate()">
+            <mat-icon>add</mat-icon>
+            {{ 'CODE_LISTS.WRITE_OFF_REASONS.ADD' | translate }}
+          </button>
+        </app-fit-empty-state>
+      }
+    </div>
+  } @else {
+    <div class="table-card">
+      <table mat-table [dataSource]="items">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>{{ 'CODE_LISTS.NAME' | translate }}</th>
+          <td mat-cell *matCellDef="let row" class="name-cell">{{ row.name }}</td>
+        </ng-container>
+
+        <!-- status badge: "info" = something the pharmacist must do (type a note), "neutral" = nothing -->
+        <ng-container matColumnDef="requiresNote">
+          <th mat-header-cell *matHeaderCellDef>{{ 'CODE_LISTS.WRITE_OFF_REASONS.NOTE' | translate }}</th>
+          <td mat-cell *matCellDef="let row">
+            @if (row.requiresNote) {
+              <app-fit-status-badge tone="info" icon="edit_note">
+                {{ 'CODE_LISTS.WRITE_OFF_REASONS.NOTE_REQUIRED' | translate }}
+              </app-fit-status-badge>
+            } @else {
+              <app-fit-status-badge tone="neutral">
+                {{ 'CODE_LISTS.WRITE_OFF_REASONS.NOTE_OPTIONAL' | translate }}
+              </app-fit-status-badge>
+            }
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="actions-cell">{{ 'COMMON.ACTIONS' | translate }}</th>
+          <td mat-cell *matCellDef="let row" class="actions-cell">
+            <button
+              mat-icon-button
+              (click)="onEdit(row)"
+              [matTooltip]="'COMMON.EDIT' | translate"
+              [attr.aria-label]="'COMMON.EDIT' | translate"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              class="delete-button"
+              (click)="onDelete(row)"
+              [matTooltip]="'COMMON.DELETE' | translate"
+              [attr.aria-label]="'COMMON.DELETE' | translate"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+
+    <app-fit-paginator-bar [vm]="this"></app-fit-paginator-bar>
+  }
+</div>

@@ -39,6 +39,15 @@ api-services/
 ├── auth/
 │   ├── auth-api.model.ts
 │   └── auth-api.service.ts
+├── dosage-forms/
+│   ├── dosage-forms-api.model.ts
+│   └── dosage-forms-api.service.ts
+├── manufacturers/
+│   ├── manufacturers-api.model.ts
+│   └── manufacturers-api.service.ts
+├── write-off-reasons/
+│   ├── write-off-reasons-api.model.ts
+│   └── write-off-reasons-api.service.ts
 └── readme.md
 ```
 
@@ -52,6 +61,9 @@ Svaki folder predstavlja jedan backend kontroler:
 | Folder | Kontroler | Šta radi |
 |--------|-----------|----------|
 | `auth/` | `/api/auth` | prijava (`login`), obnova tokena (`refresh`), odjava (`logout`), zaboravljena i nova lozinka (`forgot-password`, `reset-password`), profil (`me`) i promjena lozinke (`change-password`) |
+| `dosage-forms/` | `/api/dosage-forms` | Polica (#6) šifarnik farmaceutskih oblika: lista, `lookup` (sve stavke za dropdown), CRUD |
+| `manufacturers/` | `/api/manufacturers` | Polica (#6) šifarnik proizvođača: lista, `lookup`, CRUD |
+| `write-off-reasons/` | `/api/write-off-reasons` | Polica (#6) šifarnik razloga otpisa: lista, `lookup` (sa `requiresNote`), CRUD |
 
 ---
 

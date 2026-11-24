@@ -1,0 +1,70 @@
+<!-- Polica (#6): create/edit dialog of a manufacturer (logic in manufacturer-upsert.component.ts) -->
+<h2 mat-dialog-title>
+  {{ (isEditMode ? 'CODE_LISTS.MANUFACTURERS.EDIT_TITLE' : 'CODE_LISTS.MANUFACTURERS.CREATE_TITLE') | translate }}
+</h2>
+
+<mat-dialog-content>
+  @if (isEditMode && !model) {
+    <!-- edit mode: the record is still loading -->
+    <div class="dialog-loading">
+      <mat-spinner diameter="40"></mat-spinner>
+      <span>{{ 'COMMON.LOADING' | translate }}</span>
+    </div>
+  } @else {
+    <!-- id="manufacturer-form" connects the Save button below (outside the <form>) to this form -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" id="manufacturer-form" class="dialog-form">
+      @if (errorMessage) {
+        <div class="error-banner" role="alert">
+          <mat-icon>error</mat-icon>
+          <span>{{ errorMessage }}</span>
+        </div>
+      }
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'CODE_LISTS.NAME' | translate }}</mat-label>
+        <input
+          matInput
+          formControlName="name"
+          [maxlength]="limits.manufacturerNameMaxLength"
+          autocomplete="off"
+        />
+        <mat-hint align="end">
+          {{ form.controls.name.value.length }}/{{ limits.manufacturerNameMaxLength }}
+        </mat-hint>
+        <!-- required / maxlength from the validators, or the server's message (e.g. duplicate name) -->
+        <mat-error><app-fit-field-error [control]="form.controls.name" /></mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'CODE_LISTS.MANUFACTURERS.COUNTRY' | translate }}</mat-label>
+        <input
+          matInput
+          formControlName="country"
+          [maxlength]="limits.manufacturerCountryMaxLength"
+          autocomplete="off"
+        />
+        <mat-hint>{{ 'COMMON.OPTIONAL' | translate }}</mat-hint>
+        <mat-error><app-fit-field-error [control]="form.controls.country" /></mat-error>
+      </mat-form-field>
+    </form>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="onCancel()" [disabled]="isSaving">
+    {{ 'COMMON.CANCEL' | translate }}
+  </button>
+  <!-- not disabled when the form is invalid: a click shows what is missing (onSubmit marks all fields) -->
+  <button
+    mat-flat-button
+    color="primary"
+    type="submit"
+    form="manufacturer-form"
+    [disabled]="isLoading"
+  >
+    @if (isSaving) {
+      <mat-spinner diameter="18" class="button-spinner"></mat-spinner>
+    }
+    {{ 'COMMON.SAVE' | translate }}
+  </button>
+</mat-dialog-actions>

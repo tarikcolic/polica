@@ -85,6 +85,10 @@
     },
     "MENU": {
       "HOME": "Početna",
+      "CODE_LISTS": "ŠIFARNICI",
+      "MANUFACTURERS": "Proizvođači",
+      "DOSAGE_FORMS": "Farmaceutski oblici",
+      "WRITE_OFF_REASONS": "Razlozi otpisa",
       "SYSTEM": "SISTEM",
       "SETTINGS": "Postavke",
       "MY_PROFILE": "Moj profil",
@@ -99,6 +103,55 @@
   "ADMIN_SETTINGS": {
     "TITLE": "Postavke",
     "EMPTY": "Ovdje dolaze postavke aplikacije: pragovi upozorenja o roku trajanja, minimalni preostali rok pri prijemu robe i period za prijedlog transfera. Lični podaci i lozinka su na stranici „Moj profil”."
+  },
+  "CODE_LISTS": {
+    "NAME": "Naziv",
+    "SEARCH": "Pretraga po nazivu",
+    "CLEAR_SEARCH": "Očisti pretragu",
+    "NO_RESULTS_MESSAGE": "Nijedna stavka nema upisani tekst u nazivu. Promijenite ili očistite pretragu.",
+    "MANUFACTURERS": {
+      "TITLE": "Proizvođači",
+      "SUBTITLE": "Proizvođači lijekova koji se biraju u katalogu lijekova.",
+      "ADD": "Novi proizvođač",
+      "COUNTRY": "Država",
+      "CREATE_TITLE": "Novi proizvođač",
+      "EDIT_TITLE": "Uredi proizvođača",
+      "CREATED": "Proizvođač \"{{name}}\" je dodan.",
+      "UPDATED": "Proizvođač \"{{name}}\" je sačuvan.",
+      "DELETED": "Proizvođač \"{{name}}\" je obrisan.",
+      "EMPTY_TITLE": "Još nema proizvođača",
+      "EMPTY_MESSAGE": "Dodajte proizvođače da bi se mogli izabrati na lijeku."
+    },
+    "DOSAGE_FORMS": {
+      "TITLE": "Farmaceutski oblici",
+      "SUBTITLE": "Oblici u kojima se lijek izdaje, npr. tableta, sirup ili mast.",
+      "ADD": "Novi oblik",
+      "NAME_PLACEHOLDER": "npr. Šumeća tableta",
+      "CREATE_TITLE": "Novi farmaceutski oblik",
+      "EDIT_TITLE": "Uredi farmaceutski oblik",
+      "CREATED": "Farmaceutski oblik \"{{name}}\" je dodan.",
+      "UPDATED": "Farmaceutski oblik \"{{name}}\" je sačuvan.",
+      "DELETED": "Farmaceutski oblik \"{{name}}\" je obrisan.",
+      "EMPTY_TITLE": "Još nema farmaceutskih oblika",
+      "EMPTY_MESSAGE": "Dodajte oblike da bi se mogli izabrati na lijeku."
+    },
+    "WRITE_OFF_REASONS": {
+      "TITLE": "Razlozi otpisa",
+      "SUBTITLE": "Razlozi koje farmaceut bira kad otpisuje robu sa zalihe.",
+      "ADD": "Novi razlog",
+      "NOTE": "Napomena",
+      "NOTE_REQUIRED": "Obavezna",
+      "NOTE_OPTIONAL": "Nije obavezna",
+      "REQUIRES_NOTE": "Napomena je obavezna",
+      "REQUIRES_NOTE_HINT": "Uz ovaj razlog farmaceut mora upisati i kratko objašnjenje.",
+      "CREATE_TITLE": "Novi razlog otpisa",
+      "EDIT_TITLE": "Uredi razlog otpisa",
+      "CREATED": "Razlog otpisa \"{{name}}\" je dodan.",
+      "UPDATED": "Razlog otpisa \"{{name}}\" je sačuvan.",
+      "DELETED": "Razlog otpisa \"{{name}}\" je obrisan.",
+      "EMPTY_TITLE": "Još nema razloga otpisa",
+      "EMPTY_MESSAGE": "Dodajte razloge da bi farmaceuti mogli otpisivati robu."
+    }
   },
   "UI_KIT": {
     "TITLE": "UI komponente",

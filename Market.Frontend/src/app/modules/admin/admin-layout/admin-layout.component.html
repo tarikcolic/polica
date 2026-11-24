@@ -71,6 +71,30 @@
 
       <mat-divider></mat-divider>
 
+      <!-- CODE LISTS SECTION (#6) – chain administrator only (the route has the same check) -->
+      @if (auth.isAdmin()) {
+        <div class="nav-section-title">
+          {{ 'ADMIN_PANEL.MENU.CODE_LISTS' | translate }}
+        </div>
+
+        <a mat-list-item routerLink="/admin/code-lists/manufacturers" routerLinkActive="active">
+          <mat-icon matListItemIcon>factory</mat-icon>
+          <span matListItemTitle>{{ 'ADMIN_PANEL.MENU.MANUFACTURERS' | translate }}</span>
+        </a>
+
+        <a mat-list-item routerLink="/admin/code-lists/dosage-forms" routerLinkActive="active">
+          <mat-icon matListItemIcon>medication</mat-icon>
+          <span matListItemTitle>{{ 'ADMIN_PANEL.MENU.DOSAGE_FORMS' | translate }}</span>
+        </a>
+
+        <a mat-list-item routerLink="/admin/code-lists/write-off-reasons" routerLinkActive="active">
+          <mat-icon matListItemIcon>playlist_remove</mat-icon>
+          <span matListItemTitle>{{ 'ADMIN_PANEL.MENU.WRITE_OFF_REASONS' | translate }}</span>
+        </a>
+
+        <mat-divider></mat-divider>
+      }
+
       <!-- SYSTEM SECTION -->
       <div class="nav-section-title">
         {{ 'ADMIN_PANEL.MENU.SYSTEM' | translate }}
