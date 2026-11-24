@@ -85,6 +85,8 @@
     },
     "MENU": {
       "HOME": "Početna",
+      "CHAIN": "LANAC",
+      "PHARMACIES": "Apoteke",
       "CODE_LISTS": "ŠIFARNICI",
       "MANUFACTURERS": "Proizvođači",
       "DOSAGE_FORMS": "Farmaceutski oblici",
@@ -151,6 +153,50 @@
       "DELETED": "Razlog otpisa \"{{name}}\" je obrisan.",
       "EMPTY_TITLE": "Još nema razloga otpisa",
       "EMPTY_MESSAGE": "Dodajte razloge da bi farmaceuti mogli otpisivati robu."
+    }
+  },
+  "PHARMACIES": {
+    "TITLE": "Apoteke",
+    "SUBTITLE": "Apoteke lanca. Zaposleni, narudžbe i zalihe vežu se za apoteku.",
+    "ADD": "Nova apoteka",
+    "SEARCH": "Pretraži po nazivu ili šifri",
+    "CLEAR_SEARCH": "Očisti pretragu",
+    "CLEAR_FILTERS": "Očisti filtere",
+    "ALL_CITIES": "Svi gradovi",
+    "CODE": "Šifra",
+    "NAME": "Naziv",
+    "CITY": "Grad",
+    "ADDRESS": "Adresa",
+    "PHONE": "Telefon",
+    "MANAGER": "Voditelj",
+    "STATUS_ACTIVE": "Aktivna",
+    "STATUS_INACTIVE": "Neaktivna",
+    "NO_RESULTS_MESSAGE": "Nijedna apoteka ne odgovara odabranim filterima.",
+    "EMPTY_TITLE": "Još nema apoteka",
+    "EMPTY_MESSAGE": "Dodajte prvu apoteku lanca.",
+    "CREATE_TITLE": "Nova apoteka",
+    "EDIT_TITLE": "Uredi apoteku",
+    "BACK_TO_LIST": "Nazad na listu",
+    "CREATED": "Apoteka {{code}} \"{{name}}\" je dodana.",
+    "UPDATED": "Apoteka {{code}} \"{{name}}\" je sačuvana.",
+    "FORM": {
+      "CODE_HINT": "Npr. AP-01: slova, cifre i crtica",
+      "CODE_PATTERN": "Šifra može sadržavati samo slova A-Z, cifre i crticu.",
+      "PHONE_HINT": "Npr. +387 33 123 456",
+      "PHONE_PATTERN": "Telefon može sadržavati samo cifre, razmake i znakove + - / ( ).",
+      "ACTIVE_NOTE": "Nova apoteka je aktivna. Deaktivirati je možete na listi apoteka."
+    },
+    "ACTIVATE": {
+      "TITLE": "Aktivirati apoteku?",
+      "MESSAGE": "Apoteka {{code}} \"{{name}}\" će se ponovo nuditi pri raspoređivanju zaposlenih i transferima.",
+      "CONFIRM": "Aktiviraj",
+      "SUCCESS": "Apoteka {{code}} je aktivirana."
+    },
+    "DEACTIVATE": {
+      "TITLE": "Deaktivirati apoteku?",
+      "MESSAGE": "Apoteka {{code}} \"{{name}}\" se više neće nuditi pri raspoređivanju zaposlenih i transferima. Njeni podaci ostaju sačuvani.",
+      "CONFIRM": "Deaktiviraj",
+      "SUCCESS": "Apoteka {{code}} je deaktivirana."
     }
   },
   "UI_KIT": {

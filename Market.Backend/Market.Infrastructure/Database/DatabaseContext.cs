@@ -14,6 +14,11 @@ public partial class DatabaseContext : DbContext, IAppDbContext
     public DbSet<DosageFormEntity> DosageForms => Set<DosageFormEntity>();
     public DbSet<WriteOffReasonEntity> WriteOffReasons => Set<WriteOffReasonEntity>();
 
+    // Polica (#7): tables Cities and Pharmacies. Mapping in Configurations/CodeLists/CityEntityConfiguration and
+    // Configurations/Pharmacies; cities are seeded in StaticDataSeeder, demo pharmacies in DynamicDataSeeder.
+    public DbSet<CityEntity> Cities => Set<CityEntity>();
+    public DbSet<PharmacyEntity> Pharmacies => Set<PharmacyEntity>();
+
     private readonly TimeProvider _clock;
     public DatabaseContext(DbContextOptions<DatabaseContext> options, TimeProvider clock) : base(options)
     {

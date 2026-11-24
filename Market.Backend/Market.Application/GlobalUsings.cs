@@ -12,4 +12,6 @@ global using Market.Application.Common.Exceptions;
 global using Market.Domain.Entities.Identity;
 // Polica (#6): code list entities (Manufacturer, DosageForm, WriteOffReason) used by the CodeLists handlers
 global using Market.Domain.Entities.CodeLists;
+// Polica (#7): PharmacyEntity used by the Pharmacies handlers (CityEntity is in CodeLists above)
+global using Market.Domain.Entities.Pharmacies;
 global using Microsoft.AspNetCore.Identity;

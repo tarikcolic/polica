@@ -71,6 +71,21 @@
 
       <mat-divider></mat-divider>
 
+      <!-- CHAIN SECTION (#7) – chain administrator only (the route has the same check).
+           Employees (#8) and suppliers (#9) are added here. -->
+      @if (auth.isAdmin()) {
+        <div class="nav-section-title">
+          {{ 'ADMIN_PANEL.MENU.CHAIN' | translate }}
+        </div>
+
+        <a mat-list-item routerLink="/admin/pharmacies" routerLinkActive="active">
+          <mat-icon matListItemIcon>local_pharmacy</mat-icon>
+          <span matListItemTitle>{{ 'ADMIN_PANEL.MENU.PHARMACIES' | translate }}</span>
+        </a>
+
+        <mat-divider></mat-divider>
+      }
+
       <!-- CODE LISTS SECTION (#6) – chain administrator only (the route has the same check) -->
       @if (auth.isAdmin()) {
         <div class="nav-section-title">

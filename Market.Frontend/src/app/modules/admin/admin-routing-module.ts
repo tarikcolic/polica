@@ -59,6 +59,16 @@ const routes: Routes = [
           import('./code-lists/code-lists-module').then(m => m.CodeListsModule),
       },
 
+      // PHARMACIES (#7) – chain administrator only: list, /new and /:id/edit
+      // (pharmacies/pharmacies-routing-module.ts). Other roles read pharmacies only through the API lookup.
+      {
+        path: 'pharmacies',
+        canActivate: [myAuthGuard],
+        data: myAuthData({ requireAdmin: true }),
+        loadChildren: () =>
+          import('./pharmacies/pharmacies-module').then(m => m.PharmaciesModule),
+      },
+
       // MY PROFILE – every role (page declared in AccountModule)
       {
         path: 'profile',

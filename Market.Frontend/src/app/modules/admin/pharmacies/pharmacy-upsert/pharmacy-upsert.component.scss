@@ -1,0 +1,71 @@
+// Polica (#7): pharmacy create/edit page, built from the shared page mixins (../../_admin-page.scss).
+@use '../../admin-page';
+
+.pharmacy-upsert-page {
+  @include admin-page.container(900px);
+}
+
+.header-card {
+  @include admin-page.header-card;
+}
+
+.form-card {
+  @include admin-page.section-card;
+}
+
+// two columns on a wide screen, one on a narrow screen; the address takes the whole row
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 16px;
+}
+
+.span-2 {
+  grid-column: 1 / -1;
+}
+
+// display only: the value stays as typed, save() sends it in uppercase
+.uppercase {
+  text-transform: uppercase;
+}
+
+.error-banner {
+  @include admin-page.error-banner;
+}
+
+.page-loading {
+  @include admin-page.state;
+}
+
+.form-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 0;
+  color: admin-page.$text-secondary;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.button-spinner {
+  display: inline-block;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+@media (max-width: 700px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

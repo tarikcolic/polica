@@ -64,6 +64,8 @@ Svaki folder predstavlja jedan backend kontroler:
 | `dosage-forms/` | `/api/dosage-forms` | Polica (#6) šifarnik farmaceutskih oblika: lista, `lookup` (sve stavke za dropdown), CRUD |
 | `manufacturers/` | `/api/manufacturers` | Polica (#6) šifarnik proizvođača: lista, `lookup`, CRUD |
 | `write-off-reasons/` | `/api/write-off-reasons` | Polica (#6) šifarnik razloga otpisa: lista, `lookup` (sa `requiresNote`), CRUD |
+| `cities/` | `/api/cities` | Polica (#7) gradovi (samo čitanje): `lookup` za dropdown |
+| `pharmacies/` | `/api/pharmacies` | Polica (#7) registar apoteka: lista, `lookup` (samo aktivne), `getById`, `create`, `update`, `activate`, `deactivate` |
 
 ---
 

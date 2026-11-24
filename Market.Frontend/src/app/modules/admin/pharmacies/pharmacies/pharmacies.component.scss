@@ -1,0 +1,87 @@
+// Polica (#7): pharmacy list. Built from the shared page mixins (../../_admin-page.scss), so it looks like the
+// code lists and every other staff page; only the filter row and the inactive row style are new.
+@use '../../admin-page';
+
+.pharmacies-page {
+  @include admin-page.container(1200px);
+}
+
+.header-card {
+  @include admin-page.header-card;
+}
+
+// search + city + status side by side; they wrap onto new lines on a narrow screen
+.filters-card {
+  @include admin-page.card;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px 24px;
+  margin-bottom: 16px;
+}
+
+.search-field {
+  flex: 1 1 280px;
+}
+
+.filter-field {
+  width: 200px;
+}
+
+.error-banner {
+  @include admin-page.error-banner;
+
+  // "Pokušaj ponovo" on the right side of the banner
+  button {
+    margin-left: auto;
+  }
+}
+
+.table-card {
+  @include admin-page.table-card;
+  margin-bottom: 16px;
+}
+
+.code-cell {
+  font-weight: 600;
+  white-space: nowrap;
+  color: admin-page.$primary-dark;
+}
+
+.name-cell {
+  font-weight: 500;
+  color: admin-page.$text-primary;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.muted {
+  color: admin-page.$text-secondary;
+}
+
+.inactive-row td {
+  opacity: 0.6;
+}
+
+// the action buttons stay fully visible on an inactive row
+.inactive-row td.actions-cell {
+  opacity: 1;
+}
+
+.actions-cell {
+  width: 112px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.deactivate-button {
+  color: #c62828;
+}
+
+@media (max-width: 600px) {
+  .filter-field {
+    width: 100%;
+  }
+}

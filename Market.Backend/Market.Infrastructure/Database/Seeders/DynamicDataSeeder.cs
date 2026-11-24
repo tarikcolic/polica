@@ -17,6 +17,7 @@ namespace Market.Infrastructure.Database.Seeders;
 /// domain that never receives real email. Tests log in with the same addresses (CustomWebApplicationFactory).
 /// Pharmacies, medications and batches with dates relative to today come in #22 (demo data seeder).
 /// Polica (#6): demo manufacturers (code list) are seeded here too.
+/// Polica (#7): three demo pharmacies (AP-01 to AP-03).
 /// Called by <see cref="DatabaseInitializer"/> after migrations, in Development, Testing and IntegrationTests.
 /// </remarks>
 public static class DynamicDataSeeder
@@ -31,6 +32,56 @@ public static class DynamicDataSeeder
         // Polica (#6): demo manufacturers. Dosage forms and write-off reasons are reference data and come
         // with the migration (StaticDataSeeder); manufacturers are business data, so only demo rows are here.
         await SeedManufacturersAsync(context);
+
+        // Polica (#7): demo pharmacies. Needs the cities, which already exist (migration / EnsureCreated).
+        await SeedPharmaciesAsync(context);
+    }
+
+    /// <summary>
+    /// Polica (#7): three demo pharmacies, so the pharmacy list has data, the duplicate-code check can be tried
+    /// (e.g. "ap-01"), and the employee screen in #8 has pharmacies to assign the demo manager and pharmacist to.
+    /// Runs only while the table is empty (restart-safe, keeps the administrator's own changes).
+    /// The full demo set (stock, orders, dates relative to today) comes in #22.
+    /// </summary>
+    /// <remarks>
+    /// CityId values are the fixed Ids from StaticDataSeeder.SeedCities (1 = Sarajevo, 5 = Mostar, 3 = Tuzla).
+    /// </remarks>
+    private static async Task SeedPharmaciesAsync(DatabaseContext context)
+    {
+        if (await context.Pharmacies.AnyAsync())
+            return;
+
+        context.Pharmacies.AddRange(
+            new PharmacyEntity
+            {
+                Code = "AP-01",
+                Name = "Apoteka Centar",
+                Address = "Ferhadija 12",
+                Phone = "+387 33 200 101",
+                CityId = 1,
+                IsActive = true
+            },
+            new PharmacyEntity
+            {
+                Code = "AP-02",
+                Name = "Apoteka Stari most",
+                Address = "Kralja Tomislava 5",
+                Phone = "+387 36 200 202",
+                CityId = 5,
+                IsActive = true
+            },
+            new PharmacyEntity
+            {
+                Code = "AP-03",
+                Name = "Apoteka Kapija",
+                Address = "Turalibegova 20",
+                Phone = "+387 35 200 303",
+                CityId = 3,
+                IsActive = true
+            });
+
+        await context.SaveChangesAsync();
+        Console.WriteLine("✅ Dynamic seed: demo pharmacies added.");
     }
 
     /// <summary>

@@ -14,5 +14,9 @@ public interface IAppDbContext
     DbSet<DosageFormEntity> DosageForms { get; }
     DbSet<WriteOffReasonEntity> WriteOffReasons { get; }
 
+    // Polica (#7): cities (lookup for pharmacies, later suppliers in #9) and the pharmacies of the chain.
+    DbSet<CityEntity> Cities { get; }
+    DbSet<PharmacyEntity> Pharmacies { get; }
+
     Task<int> SaveChangesAsync(CancellationToken ct);
 }
