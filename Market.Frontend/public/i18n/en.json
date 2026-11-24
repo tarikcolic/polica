@@ -85,6 +85,8 @@
     },
     "MENU": {
       "HOME": "Home",
+      "CHAIN": "CHAIN",
+      "PHARMACIES": "Pharmacies",
       "CODE_LISTS": "CODE LISTS",
       "MANUFACTURERS": "Manufacturers",
       "DOSAGE_FORMS": "Dosage forms",
@@ -151,6 +153,50 @@
       "DELETED": "Write-off reason \"{{name}}\" was deleted.",
       "EMPTY_TITLE": "No write-off reasons yet",
       "EMPTY_MESSAGE": "Add reasons so pharmacists can write stock off."
+    }
+  },
+  "PHARMACIES": {
+    "TITLE": "Pharmacies",
+    "SUBTITLE": "Pharmacies of the chain. Employees, orders and stock belong to a pharmacy.",
+    "ADD": "New pharmacy",
+    "SEARCH": "Search by name or code",
+    "CLEAR_SEARCH": "Clear search",
+    "CLEAR_FILTERS": "Clear filters",
+    "ALL_CITIES": "All cities",
+    "CODE": "Code",
+    "NAME": "Name",
+    "CITY": "City",
+    "ADDRESS": "Address",
+    "PHONE": "Phone",
+    "MANAGER": "Manager",
+    "STATUS_ACTIVE": "Active",
+    "STATUS_INACTIVE": "Inactive",
+    "NO_RESULTS_MESSAGE": "No pharmacy matches the selected filters.",
+    "EMPTY_TITLE": "No pharmacies yet",
+    "EMPTY_MESSAGE": "Add the first pharmacy of the chain.",
+    "CREATE_TITLE": "New pharmacy",
+    "EDIT_TITLE": "Edit pharmacy",
+    "BACK_TO_LIST": "Back to list",
+    "CREATED": "Pharmacy {{code}} \"{{name}}\" has been added.",
+    "UPDATED": "Pharmacy {{code}} \"{{name}}\" has been saved.",
+    "FORM": {
+      "CODE_HINT": "E.g. AP-01: letters, digits and hyphen",
+      "CODE_PATTERN": "The code may contain only letters A-Z, digits and a hyphen.",
+      "PHONE_HINT": "E.g. +387 33 123 456",
+      "PHONE_PATTERN": "The phone may contain only digits, spaces and + - / ( ).",
+      "ACTIVE_NOTE": "A new pharmacy is active. You can deactivate it in the pharmacy list."
+    },
+    "ACTIVATE": {
+      "TITLE": "Activate pharmacy?",
+      "MESSAGE": "Pharmacy {{code}} \"{{name}}\" will be offered again for employee assignment and transfers.",
+      "CONFIRM": "Activate",
+      "SUCCESS": "Pharmacy {{code}} has been activated."
+    },
+    "DEACTIVATE": {
+      "TITLE": "Deactivate pharmacy?",
+      "MESSAGE": "Pharmacy {{code}} \"{{name}}\" will no longer be offered for employee assignment and transfers. Its data is kept.",
+      "CONFIRM": "Deactivate",
+      "SUCCESS": "Pharmacy {{code}} has been deactivated."
     }
   },
   "UI_KIT": {

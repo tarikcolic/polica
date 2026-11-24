@@ -17,6 +17,9 @@ namespace Market.Infrastructure.Database.Seeders;
 /// Manufacturers are NOT here: which manufacturers a chain buys from is business data the administrator
 /// enters, so the demo manufacturers are in <see cref="DynamicDataSeeder"/> (Development and Testing only).
 ///
+/// Polica (#7): cities are seeded here for the same reason (a pharmacy needs one); demo pharmacies are business
+/// data and go to DynamicDataSeeder.
+///
 /// Ids: HasData inserts the rows with these explicit Ids (SQL Server IDENTITY_INSERT). SQL Server then moves
 /// the identity counter past the highest inserted value, so a row the administrator creates later gets Id 6, 7...
 /// The administrator may rename or delete a seeded row; that only changes the data, the migration stays as is.
@@ -32,6 +35,25 @@ public static class StaticDataSeeder
     {
         SeedDosageForms(modelBuilder);
         SeedWriteOffReasons(modelBuilder);
+        SeedCities(modelBuilder);
+    }
+
+    /// <summary>
+    /// Polica (#7): the larger cities of Bosnia and Herzegovina. Reference data (like the dosage forms): a
+    /// pharmacy (#7) or a supplier (#9) cannot be saved without a city, and there is no admin screen for cities,
+    /// so they must come with the migration in every environment. A new city = a new HasData row + a migration.
+    /// </summary>
+    private static void SeedCities(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<CityEntity>().HasData(
+            new CityEntity { Id = 1, Name = "Sarajevo", CreatedAtUtc = SeededAtUtc },
+            new CityEntity { Id = 2, Name = "Banja Luka", CreatedAtUtc = SeededAtUtc },
+            new CityEntity { Id = 3, Name = "Tuzla", CreatedAtUtc = SeededAtUtc },
+            new CityEntity { Id = 4, Name = "Zenica", CreatedAtUtc = SeededAtUtc },
+            new CityEntity { Id = 5, Name = "Mostar", CreatedAtUtc = SeededAtUtc },
+            new CityEntity { Id = 6, Name = "Bihać", CreatedAtUtc = SeededAtUtc },
+            new CityEntity { Id = 7, Name = "Bijeljina", CreatedAtUtc = SeededAtUtc },
+            new CityEntity { Id = 8, Name = "Brčko", CreatedAtUtc = SeededAtUtc });
     }
 
     /// <summary>
