@@ -1,0 +1,4 @@
+// Polica (#6): same dialog layout as the other two code lists (see ../../_code-list-page.scss).
+@use '../../code-list-page';
+
+@include code-list-page.upsert-dialog;

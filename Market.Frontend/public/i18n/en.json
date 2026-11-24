@@ -85,6 +85,10 @@
     },
     "MENU": {
       "HOME": "Home",
+      "CODE_LISTS": "CODE LISTS",
+      "MANUFACTURERS": "Manufacturers",
+      "DOSAGE_FORMS": "Dosage forms",
+      "WRITE_OFF_REASONS": "Write-off reasons",
       "SYSTEM": "SYSTEM",
       "SETTINGS": "Settings",
       "MY_PROFILE": "My profile",
@@ -99,6 +103,55 @@
   "ADMIN_SETTINGS": {
     "TITLE": "Settings",
     "EMPTY": "Application settings go here: expiry alert thresholds, minimum remaining shelf life on goods receipt and the transfer suggestion period. Personal data and password are on the “My profile” page."
+  },
+  "CODE_LISTS": {
+    "NAME": "Name",
+    "SEARCH": "Search by name",
+    "CLEAR_SEARCH": "Clear search",
+    "NO_RESULTS_MESSAGE": "No item has the entered text in its name. Change or clear the search.",
+    "MANUFACTURERS": {
+      "TITLE": "Manufacturers",
+      "SUBTITLE": "Medication manufacturers chosen in the medication catalog.",
+      "ADD": "New manufacturer",
+      "COUNTRY": "Country",
+      "CREATE_TITLE": "New manufacturer",
+      "EDIT_TITLE": "Edit manufacturer",
+      "CREATED": "Manufacturer \"{{name}}\" was added.",
+      "UPDATED": "Manufacturer \"{{name}}\" was saved.",
+      "DELETED": "Manufacturer \"{{name}}\" was deleted.",
+      "EMPTY_TITLE": "No manufacturers yet",
+      "EMPTY_MESSAGE": "Add manufacturers so they can be chosen on a medication."
+    },
+    "DOSAGE_FORMS": {
+      "TITLE": "Dosage forms",
+      "SUBTITLE": "Forms in which a medication is dispensed, e.g. tablet, syrup or ointment.",
+      "ADD": "New form",
+      "NAME_PLACEHOLDER": "e.g. Effervescent tablet",
+      "CREATE_TITLE": "New dosage form",
+      "EDIT_TITLE": "Edit dosage form",
+      "CREATED": "Dosage form \"{{name}}\" was added.",
+      "UPDATED": "Dosage form \"{{name}}\" was saved.",
+      "DELETED": "Dosage form \"{{name}}\" was deleted.",
+      "EMPTY_TITLE": "No dosage forms yet",
+      "EMPTY_MESSAGE": "Add dosage forms so they can be chosen on a medication."
+    },
+    "WRITE_OFF_REASONS": {
+      "TITLE": "Write-off reasons",
+      "SUBTITLE": "Reasons a pharmacist chooses when writing stock off.",
+      "ADD": "New reason",
+      "NOTE": "Note",
+      "NOTE_REQUIRED": "Required",
+      "NOTE_OPTIONAL": "Optional",
+      "REQUIRES_NOTE": "A note is required",
+      "REQUIRES_NOTE_HINT": "With this reason the pharmacist must also type a short explanation.",
+      "CREATE_TITLE": "New write-off reason",
+      "EDIT_TITLE": "Edit write-off reason",
+      "CREATED": "Write-off reason \"{{name}}\" was added.",
+      "UPDATED": "Write-off reason \"{{name}}\" was saved.",
+      "DELETED": "Write-off reason \"{{name}}\" was deleted.",
+      "EMPTY_TITLE": "No write-off reasons yet",
+      "EMPTY_MESSAGE": "Add reasons so pharmacists can write stock off."
+    }
   },
   "UI_KIT": {
     "TITLE": "UI kit",

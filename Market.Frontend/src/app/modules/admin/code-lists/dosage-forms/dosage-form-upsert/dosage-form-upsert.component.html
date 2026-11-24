@@ -1,0 +1,49 @@
+<!-- Polica (#6): create/edit dialog of a dosage form (logic in dosage-form-upsert.component.ts) -->
+<h2 mat-dialog-title>
+  {{ (isEditMode ? 'CODE_LISTS.DOSAGE_FORMS.EDIT_TITLE' : 'CODE_LISTS.DOSAGE_FORMS.CREATE_TITLE') | translate }}
+</h2>
+
+<mat-dialog-content>
+  @if (isEditMode && !model) {
+    <div class="dialog-loading">
+      <mat-spinner diameter="40"></mat-spinner>
+      <span>{{ 'COMMON.LOADING' | translate }}</span>
+    </div>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" id="dosage-form-form" class="dialog-form">
+      @if (errorMessage) {
+        <div class="error-banner" role="alert">
+          <mat-icon>error</mat-icon>
+          <span>{{ errorMessage }}</span>
+        </div>
+      }
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'CODE_LISTS.NAME' | translate }}</mat-label>
+        <input
+          matInput
+          formControlName="name"
+          [maxlength]="limits.dosageFormNameMaxLength"
+          [placeholder]="'CODE_LISTS.DOSAGE_FORMS.NAME_PLACEHOLDER' | translate"
+          autocomplete="off"
+        />
+        <mat-hint align="end">
+          {{ form.controls.name.value.length }}/{{ limits.dosageFormNameMaxLength }}
+        </mat-hint>
+        <mat-error><app-fit-field-error [control]="form.controls.name" /></mat-error>
+      </mat-form-field>
+    </form>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="onCancel()" [disabled]="isSaving">
+    {{ 'COMMON.CANCEL' | translate }}
+  </button>
+  <button mat-flat-button color="primary" type="submit" form="dosage-form-form" [disabled]="isLoading">
+    @if (isSaving) {
+      <mat-spinner diameter="18" class="button-spinner"></mat-spinner>
+    }
+    {{ 'COMMON.SAVE' | translate }}
+  </button>
+</mat-dialog-actions>

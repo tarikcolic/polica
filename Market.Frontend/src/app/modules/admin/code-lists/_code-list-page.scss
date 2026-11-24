@@ -1,0 +1,91 @@
+// Polica (#6): the shared look of the three code list pages and their create/edit dialogs.
+// Built from the page mixins in ../_admin-page.scss (header card, table card, error banner), so the code
+// lists look like every other staff page. Each component's .scss includes one mixin:
+//   list page:  @use '../code-list-page';     @include code-list-page.list-page;
+//   dialog:     @use '../../code-list-page';  @include code-list-page.upsert-dialog;
+// Mixins (not global classes) keep Angular's style encapsulation: each component gets its own copy.
+@use '../admin-page';
+
+@mixin list-page {
+  .code-list-page {
+    @include admin-page.container(1000px);
+  }
+
+  .header-card {
+    @include admin-page.header-card;
+  }
+
+  // subscriptSizing="dynamic" on the field removes the empty hint row, so the field lines up with the button
+  .search-field {
+    width: 280px;
+  }
+
+  .error-banner {
+    @include admin-page.error-banner;
+
+    // "Pokušaj ponovo" on the right side of the banner
+    button {
+      margin-left: auto;
+    }
+  }
+
+  .table-card {
+    @include admin-page.table-card;
+    margin-bottom: 16px;
+  }
+
+  .name-cell {
+    font-weight: 500;
+    color: admin-page.$text-primary;
+  }
+
+  .muted {
+    color: admin-page.$text-secondary;
+  }
+
+  .actions-cell {
+    width: 112px;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .delete-button {
+    color: #c62828;
+  }
+
+  @media (max-width: 600px) {
+    .search-field {
+      width: 100%;
+    }
+  }
+}
+
+@mixin upsert-dialog {
+  // the fields stack vertically; the gap leaves room for the hint / error line under each field
+  .dialog-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 8px;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .error-banner {
+    @include admin-page.error-banner;
+  }
+
+  // spinner while an edit dialog loads the record
+  .dialog-loading {
+    @include admin-page.state;
+  }
+
+  // spinner inside the save button while saving
+  .button-spinner {
+    display: inline-block;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+}

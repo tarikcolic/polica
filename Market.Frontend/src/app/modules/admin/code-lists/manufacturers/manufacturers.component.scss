@@ -1,0 +1,4 @@
+// Polica (#6): same layout as the other two code list pages (see ../_code-list-page.scss).
+@use '../code-list-page';
+
+@include code-list-page.list-page;

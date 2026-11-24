@@ -22,6 +22,185 @@ namespace Market.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Market.Domain.Entities.CodeLists.DosageFormEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasFilter("[IsDeleted] = 0");
+
+                    b.ToTable("DosageForms", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAtUtc = new DateTime(2026, 11, 23, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsDeleted = false,
+                            Name = "Tableta"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAtUtc = new DateTime(2026, 11, 23, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsDeleted = false,
+                            Name = "Kapsula"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAtUtc = new DateTime(2026, 11, 23, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsDeleted = false,
+                            Name = "Sirup"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAtUtc = new DateTime(2026, 11, 23, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsDeleted = false,
+                            Name = "Mast"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAtUtc = new DateTime(2026, 11, 23, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsDeleted = false,
+                            Name = "Injekcija"
+                        });
+                });
+
+            modelBuilder.Entity("Market.Domain.Entities.CodeLists.ManufacturerEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Country")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasFilter("[IsDeleted] = 0");
+
+                    b.ToTable("Manufacturers", (string)null);
+                });
+
+            modelBuilder.Entity("Market.Domain.Entities.CodeLists.WriteOffReasonEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("RequiresNote")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasFilter("[IsDeleted] = 0");
+
+                    b.ToTable("WriteOffReasons", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAtUtc = new DateTime(2026, 11, 23, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsDeleted = false,
+                            Name = "Istekao rok trajanja",
+                            RequiresNote = false
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAtUtc = new DateTime(2026, 11, 23, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsDeleted = false,
+                            Name = "Oštećeno pakovanje",
+                            RequiresNote = false
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAtUtc = new DateTime(2026, 11, 23, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsDeleted = false,
+                            Name = "Povučena serija",
+                            RequiresNote = false
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAtUtc = new DateTime(2026, 11, 23, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsDeleted = false,
+                            Name = "Neodgovarajuće čuvanje",
+                            RequiresNote = true
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAtUtc = new DateTime(2026, 11, 23, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsDeleted = false,
+                            Name = "Ostalo",
+                            RequiresNote = true
+                        });
+                });
+
             modelBuilder.Entity("Market.Domain.Entities.Identity.MarketUserEntity", b =>
                 {
                     b.Property<int>("Id")

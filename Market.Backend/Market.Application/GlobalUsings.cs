@@ -10,4 +10,6 @@ global using Microsoft.EntityFrameworkCore;
 global using System.Text.Json.Serialization;
 global using Market.Application.Common.Exceptions;
 global using Market.Domain.Entities.Identity;
+// Polica (#6): code list entities (Manufacturer, DosageForm, WriteOffReason) used by the CodeLists handlers
+global using Market.Domain.Entities.CodeLists;
 global using Microsoft.AspNetCore.Identity;
